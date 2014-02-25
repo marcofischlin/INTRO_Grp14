@@ -32,6 +32,15 @@
 #include "Events.h"
 #include "LED1.h"
 #include "LEDpin1.h"
+#include "WAIT1.h"
+#include "LED2.h"
+#include "LEDpin2.h"
+#include "LED3.h"
+#include "LEDpin3.h"
+#include "LED4.h"
+#include "LEDpin4.h"
+#include "LED5.h"
+#include "LEDpin5.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -39,6 +48,7 @@
 #include "IO_Map.h"
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "Platform.h"
 
 void main(void)
 {
@@ -50,6 +60,8 @@ int i;
 
   /* Write your code here */
   /* For example: for(;;) { } */
+  APP_Run();
+  for(;;){}
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
@@ -58,10 +70,7 @@ int i;
   #endif
   /*** End of RTOS startup code.  ***/
   /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-  for(;;){
-	  LED1_Neg();
-	  WAIT1_Waitms(500);
-  }
+  for(;;){}
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 

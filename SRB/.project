@@ -30,9 +30,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Common</name>
+			<name>Sources/include</name>
 			<type>2</type>
-			<locationURI>PARENT-2-WORKSPACE_LOC/INTRO_Grp14/Common</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Common/include</locationURI>
+		</link>
+		<link>
+			<name>Sources/src</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Common/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
