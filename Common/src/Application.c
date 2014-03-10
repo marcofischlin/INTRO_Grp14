@@ -7,11 +7,37 @@
 
 #include "Platform.h"
 #include "Application.h"
+#include "Event.h"
+#include "WAIT1.h"
+#include "LED.h"
+
+static void APP_HandleEvent(EVNT_Handle event) {
+	switch(event){
+					case EVNT_INIT:
+						LED1_On();
+						WAIT1_Waitms(100);
+						LED1_Off();
+						break;
+					default:
+						break;
+	}
+	
+}
+
+static void APP_Loop(void) {
+	for(;;){
+		EVNT_HandleEvent(APP_HandleEvent);
+	}
+}
+
 
 void APP_Run(void) {
-  PL_Init();
-  /* stuff here */
-  LED_Test();
-  
-  PL_Deinit();
+	EVNT_Init();
+	PL_Init();
+	/* stuff here */
+	EVNT_SetEvent(EVNT_INIT);
+	APP_Loop();
+
+	PL_Deinit();
+	EVNT_Deinit();
 }

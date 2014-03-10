@@ -45,6 +45,7 @@
 #include "LEDpin4.h"
 #include "LED5.h"
 #include "LEDpin5.h"
+#include "CS1.h"
 
 
 /* END Events */

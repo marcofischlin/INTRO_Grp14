@@ -47,6 +47,7 @@
 #include "LED4.h"
 #include "LEDpin4.h"
 #include "BitIoLdd4.h"
+#include "CS1.h"
 
 #ifdef __cplusplus
 extern "C" {

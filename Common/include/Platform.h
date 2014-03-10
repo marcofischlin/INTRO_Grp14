@@ -18,7 +18,12 @@
 #define PL_IS_FRDM  (defined(PL_BOARD_IS_FRDM))
   /*!< Macro is defined through compiler option for the FRDM board */
 
+
 #define PL_HAS_LED 1
+
+#define PL_HAS_EVENTS 1
+
+
 
 #ifdef PL_BOARD_IS_SRB
 #define PL_NOF_LEDS 5
