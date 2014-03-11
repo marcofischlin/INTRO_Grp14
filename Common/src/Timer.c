@@ -11,16 +11,18 @@
 #include "Timer.h" /* own interface */
 #include "Event.h"
 
-int cnt = 0;
 
 /* Event on Timer Interrupt */
 void TMR_OnInterrupt(void){
-	if (cnt == 2000) {
+	static int cnt = 0;
+#if PL_HAS_LED_HEARTBEAT
+	if (cnt == 1000) {
 		EVNT_SetEvent(EVNT_LED_HEARTBEAT);
 		cnt = 0;
 	} else {
 		cnt += TMR_TICK_MS;
 	}
+#endif
 }
 
 

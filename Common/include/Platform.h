@@ -24,6 +24,7 @@
 #define PL_HAS_EVENTS 1
 
 #define PL_HAS_TIMER 1
+#define PL_HAS_LED_HEARTBEAT 1
 
 
 

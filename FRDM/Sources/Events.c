@@ -29,6 +29,7 @@
 
 #include "Cpu.h"
 #include "Events.h"
+#include "Platform.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,7 +72,9 @@ void Cpu_OnNMIINT(void)
 */
 void TI1_OnInterrupt(void)
 {
-	TMR_OnInterrupt();
+	#if PL_HAS_TIMER
+		TMR_OnInterrupt();
+	#endif
 }
 
 /* END Events */

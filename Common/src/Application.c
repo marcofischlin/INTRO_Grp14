@@ -18,9 +18,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						WAIT1_Waitms(100);
 						LED1_Off();
 						break;
+				#if PL_HAS_LED_HEARTBEAT
 					case EVNT_LED_HEARTBEAT:
 						LED2_Neg();
 						break;
+				#endif
 					default:
 						break;
 	}
