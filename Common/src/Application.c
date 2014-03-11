@@ -18,6 +18,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						WAIT1_Waitms(100);
 						LED1_Off();
 						break;
+					case EVNT_LED_HEARTBEAT:
+						LED2_Neg();
+						break;
 					default:
 						break;
 	}

@@ -23,6 +23,8 @@
 
 #define PL_HAS_EVENTS 1
 
+#define PL_HAS_TIMER 1
+
 
 
 #ifdef PL_BOARD_IS_SRB

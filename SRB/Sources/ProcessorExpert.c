@@ -42,6 +42,7 @@
 #include "LED5.h"
 #include "LEDpin5.h"
 #include "CS1.h"
+#include "TI1.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

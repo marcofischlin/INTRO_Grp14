@@ -15,7 +15,8 @@
 
 typedef enum EVNT_Handle {
   EVNT_INIT,            /*!< System Initialization Event */
-  EVNT_NOF_EVENTS       /*!< Must be last one! */
+  EVNT_LED_HEARTBEAT,
+  EVNT_NOF_EVENTS/*!< Must be last one! */
 } EVNT_Handle;
 
 /*!
@@ -55,5 +56,6 @@ void EVNT_Init(void);
 
 /*! \brief Event module de-initialization */
 void EVNT_Deinit(void);
+
 
 #endif /* EVENT_H_ */
