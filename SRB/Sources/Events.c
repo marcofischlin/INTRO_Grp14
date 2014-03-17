@@ -54,6 +54,25 @@ void TI1_OnInterrupt(void)
 	#endif
 }
 
+/*
+** ===================================================================
+**     Event       :  KB1_OnInterrupt (module Events)
+**
+**     Component   :  KB1 [KBI]
+**     Description :
+**         This event is called when the active signal edge/level
+**         occurs. This event is enabled only if <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void KB1_OnInterrupt(void)
+{
+  /* Write your code here ... */
+	KEY_OnInterrupt();
+}
+
 /* END Events */
 
 /*!

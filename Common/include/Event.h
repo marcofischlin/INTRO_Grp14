@@ -16,6 +16,10 @@
 typedef enum EVNT_Handle {
   EVNT_INIT,            /*!< System Initialization Event */
   EVNT_LED_HEARTBEAT,
+  EVNT_KEY1_PRESSED,
+  EVNT_KEY2_PRESSED,
+  EVNT_KEY3_PRESSED,
+  EVNT_KEY4_PRESSED,
   EVNT_NOF_EVENTS/*!< Must be last one! */
 } EVNT_Handle;
 

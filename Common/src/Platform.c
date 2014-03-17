@@ -70,6 +70,9 @@ void PL_Init(void) {
 #if PL_HAS_LED 
 	LED_Init();
 #endif
+#if PL_HAS_KEYBOARD 
+	KEY_Init();
+#endif
 }
 
 void PL_Deinit(void) { 
