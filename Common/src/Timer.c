@@ -14,7 +14,13 @@
 
 /* Event on Timer Interrupt */
 void TMR_OnInterrupt(void){
-	static int cnt = 0;
+	
+static int cnt = 0;
+	
+#if PL_HAS_TRIGGER
+	TRG_IncTick();
+#endif
+	
 #if PL_HAS_LED_HEARTBEAT
 	if (cnt == 1000) {
 		EVNT_SetEvent(EVNT_LED_HEARTBEAT);

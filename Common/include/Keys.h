@@ -72,7 +72,7 @@
 #if PL_IS_FRDM
 #define PL_POLL_KEYS() \
 	if (SW1_GetVal()==0)\
-	{ EVNT_SetEvent(EVNT_KEY1_PRESSED);\
+	{ EVNT_SetEvent(EVNT_SW1_PRESSED);\
 	}
 #endif
 

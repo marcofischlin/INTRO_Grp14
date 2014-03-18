@@ -16,18 +16,28 @@
 
 void KEY_Scan(void) {
   /*! \todo Implement handling of keys */
+#if PL_NOF_KEYS>=1
 	if (KEY1_Get()){
-		EVNT_SetEvent(EVNT_KEY1_PRESSED);
+		EVNT_SetEvent(EVNT_SW1_PRESSED);	
+	}	
+#endif
+#if PL_NOF_KEYS>=2
+	else if (KEY2_Get()){
+		EVNT_SetEvent(EVNT_SW2_PRESSED);
 		
-	}else if (KEY2_Get()){
-		EVNT_SetEvent(EVNT_KEY2_PRESSED);
-		
-	}else if (KEY3_Get()){
-			EVNT_SetEvent(EVNT_KEY3_PRESSED);
-			
-	}else if (KEY4_Get()){
-			EVNT_SetEvent(EVNT_KEY4_PRESSED);
 	}
+#endif
+#if PL_NOF_KEYS>=3
+	else if (KEY3_Get()){
+			EVNT_SetEvent(EVNT_SW3_PRESSED);
+			
+	}
+#endif
+#if PL_NOF_KEYS>=4
+	else if (KEY4_Get()){
+			EVNT_SetEvent(EVNT_SW4_PRESSED);
+	}
+#endif
 }
 
 #if PL_HAS_KBI
