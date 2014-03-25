@@ -27,22 +27,22 @@
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {
-  /* all LED's on by default */
-  #if PL_NOF_LED>=1
-  LED1_On();
-  #endif
-  #if PL_NOF_LED>=2
-  LED2_On();
-  #endif
-  #if PL_NOF_LED>=3
-  LED3_On();
-  #endif
-  #if PL_NOF_LED>=4
-  LED4_On();
-  #endif
-  #if PL_NOF_LED>=5
-  LED5_On();
-  #endif
+	/* all LED's off by default */
+	  #if PL_NOF_LEDS>=1
+	  LED1_Off();
+	  #endif
+	  #if PL_NOF_LEDS>=2
+	  LED2_Off();
+	  #endif
+	  #if PL_NOF_LEDS>=3
+	  LED3_Off();
+	  #endif
+	  #if PL_NOF_LEDS>=4
+	  LED4_Off();
+	  #endif
+	  #if PL_NOF_LEDS>=5
+	  LED5_Off();
+	  #endif
 }
 #endif /* PL_HAS_LED */
 
@@ -68,16 +68,55 @@ static void PL_LedDeinit(void) {
 #endif /* PL_HAS_LED */
 
 void PL_Init(void) { 
-#if PL_HAS_LED 
-	LED_Init();
+#if PL_HAS_LED
+  PL_LedInit();
+#endif  
+#if PL_HAS_EVENTS
+  EVNT_Init();
+#endif
+#if PL_HAS_TIMER
+  TMR_Init();
 #endif
 #if PL_HAS_KEYS
-	KEY_Init();
+  KEY_Init();
+#endif
+#if PL_HAS_TRIGGER
+  TRG_Init();
+#endif
+#if PL_HAS_BUZZER
+  BUZ_Init();
+#endif
+#if PL_HAS_DEBOUNCE
+  DBNC_Init();
+#endif
+#if PL_HAS_RTOS
+  RTOS_Init();
 #endif
 }
 
 void PL_Deinit(void) { 
-#if PL_HAS_LED 
-	PL_LedDeinit();
+#if PL_HAS_RTOS
+  RTOS_Deinit();
+#endif
+#if PL_HAS_DEBOUNCE
+  DBNC_Deinit();
+#endif
+#if PL_HAS_BUZZER
+  BUZ_Deinit();
+#endif
+#if PL_HAS_TRIGGER
+  TRG_Deinit();
+#endif
+#if PL_HAS_KEYS
+  KEY_Init();
+#endif
+#if PL_HAS_TIMER
+  TMR_Deinit();
+#endif
+#if PL_HAS_EVENTS
+  EVNT_Deinit();
+#endif
+#if PL_HAS_LED
+  PL_LedDeinit();
 #endif
 }

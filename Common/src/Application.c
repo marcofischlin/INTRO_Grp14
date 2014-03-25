@@ -74,6 +74,7 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */
 #endif
+   // LED1_Neg();
     FRTOS1_vTaskDelay(20/portTICK_RATE_MS);
   }
 }
@@ -90,11 +91,7 @@ static void APP_Loop(void) {
 
 
 void APP_Run(void) {
-	EVNT_Init();
-	//PL_LedInit();
 	PL_Init();
-	BUZ_Init();
-	/* stuff here */
 	  EVNT_SetEvent(EVNT_INIT);
 	#if PL_HAS_RTOS
 	  if (FRTOS1_xTaskCreate(
@@ -113,9 +110,5 @@ void APP_Run(void) {
 	#else
 	  APP_Loop();
 	#endif
-	
-	BUZ_Deinit();
-	PL_Deinit();
-	//PL_LedDeinit();
-	EVNT_Deinit();
+	  PL_Deinit();
 }

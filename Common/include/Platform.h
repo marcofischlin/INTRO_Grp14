@@ -26,7 +26,7 @@
   /*!< Set to 1 if we have the Event module implemented, 0 otherwise */
 #define PL_HAS_TIMER          (1)
   /*!< Set to 1 if we have the Timer module implemented, 0 otherwise */
-#define PL_HAS_LED_HEARTBEAT  (1)
+#define PL_HAS_LED_HEARTBEAT  (0)
   /*!< Set to 1 if we have a LED heartbeat, 0 otherwise */
 #define PL_HAS_KEYS           (1)
   /*!< Set to 1 if we have push buttons (keys) implemented, 0 otherwise */
