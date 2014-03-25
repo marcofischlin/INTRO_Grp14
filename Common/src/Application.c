@@ -7,10 +7,23 @@
 
 #include "Platform.h"
 #include "Application.h"
-#include "Event.h"
 #include "WAIT1.h"
-#include "LED.h"
-#include "Keys.h"
+#if PL_HAS_EVENTS
+  #include "Event.h"
+#endif
+#if PL_HAS_LED
+  #include "LED.h"
+#endif
+#if PL_HAS_KEYS
+  #include "Keys.h"
+#endif
+#if PL_HAS_BUZZER
+  #include "Buzzer.h"
+#endif
+#if PL_HAS_RTOS
+  #include "FRTOS1.h"
+  #include "RTOS.h"
+#endif
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
@@ -28,7 +41,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
 	    LED1_Neg();
-	    BUZ_Beep(20,1000);
+	    (void) BUZ_Beep(20,1000);
 	    break;
 	#endif
 	#if PL_NOF_KEYS>=2
@@ -53,14 +66,27 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	}
 
 
-static void APP_Loop(void) {
-	for(;;){
-		EVNT_HandleEvent(APP_HandleEvent);
-	#if (PL_HAS_KEYS && !(PL_HAS_KBI))
-		PL_POLL_KEYS();
-	#endif
-	}
+#if PL_HAS_RTOS
+static portTASK_FUNCTION(MainTask, pvParameters) {
+  (void)pvParameters; /* parameter not used */
+  for(;;) {
+    EVNT_HandleEvent(APP_HandleEvent);
+#if PL_HAS_KEYS && !PL_HAS_KBI
+    KEY_Scan(); /* poll keys */
+#endif
+    FRTOS1_vTaskDelay(20/portTICK_RATE_MS);
+  }
 }
+#else
+static void APP_Loop(void) {
+  for(;;) {
+    EVNT_HandleEvent(APP_EvntHandler);
+#if PL_HAS_KEYS && !PL_HAS_KBI
+    KEY_Scan(); /* poll keys */
+#endif
+  } /* for */
+}
+#endif
 
 
 void APP_Run(void) {
@@ -69,8 +95,24 @@ void APP_Run(void) {
 	PL_Init();
 	BUZ_Init();
 	/* stuff here */
-	EVNT_SetEvent(EVNT_INIT);
-	APP_Loop();
+	  EVNT_SetEvent(EVNT_INIT);
+	#if PL_HAS_RTOS
+	  if (FRTOS1_xTaskCreate(
+	        MainTask,  /* pointer to the task */
+	        "Main", /* task name for kernel awareness debugging */
+	        configMINIMAL_STACK_SIZE, /* task stack size */
+	        (void*)NULL, /* optional task startup argument */
+	        tskIDLE_PRIORITY,  /* initial priority */
+	        (xTaskHandle*)NULL /* optional task handle to create */
+	      ) != pdPASS) {
+	    /*lint -e527 */
+	    for(;;){} /* error! probably out of memory */
+	    /*lint +e527 */
+	  }
+	  FRTOS1_vTaskStartScheduler();
+	#else
+	  APP_Loop();
+	#endif
 	
 	BUZ_Deinit();
 	PL_Deinit();

@@ -45,6 +45,10 @@
 #include "TI1.h"
 #include "KB1.h"
 #include "BUZ1.h"
+#include "FRTOS1.h"
+#include "RTOSSWI1.h"
+#include "TickCntr1.h"
+#include "UTIL1.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -57,7 +61,7 @@
 void main(void)
 {
   /* Write your local variable definition here */
-int i;
+
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/

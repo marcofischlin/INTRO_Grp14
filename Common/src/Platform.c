@@ -7,6 +7,7 @@
 #include "Platform.h"
 
 #if PL_HAS_LED
+#include "LED.h"
 #if PL_NOF_LED>=1
 #include "LED1.h"
 #endif
@@ -70,13 +71,13 @@ void PL_Init(void) {
 #if PL_HAS_LED 
 	LED_Init();
 #endif
-#if PL_HAS_KEYBOARD 
+#if PL_HAS_KEYS
 	KEY_Init();
 #endif
 }
 
 void PL_Deinit(void) { 
 #if PL_HAS_LED 
-	LED_Deinit();
+	PL_LedDeinit();
 #endif
 }

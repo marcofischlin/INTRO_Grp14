@@ -10,8 +10,6 @@
 
 #include "Event.h"
 
-static void APP_HandleEvent(EVNT_Handle event);
-static void APP_Loop(void);
 void APP_Run(void);
 
 #endif /* APPLICATION_H_ */

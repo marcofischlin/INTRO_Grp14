@@ -36,10 +36,14 @@
   /*!< Set to 1 if we have use trigger interrupt */
 #define PL_HAS_BUZZER         (1)
   /*!< Set to 1 if we have use trigger interrupt */
+#define PL_HAS_DEBOUNCE		  (1)
+  /*!< Set to 1 if we have use debouncing */
+#define PL_HAS_RTOS			  (1)
+  /*!< Set to 1 if we have use a RTOS */
 
 
 #if PL_IS_FRDM
-  #define PL_NOF_LEDS       3
+  #define PL_NOF_LED        3
      /*!< FRDM board has 3 LEDs (RGB) */
   #define PL_NOF_KEYS       1
      /*!< Number of push buttons on the FRDM board */
@@ -50,7 +54,7 @@
   #define PL_BUZZER_IS_HW_PWM (0)
      /*!< Set to 1 if buzzer uses a hardware PWM signal */
 #elif PL_IS_SRB
-  #define PL_NOF_LEDS       5
+  #define PL_NOF_LED        5
      /*!< We have 5 LED's on the SRB board */
   #define PL_NOF_KEYS       4
      /*!< Number of push buttons on the SRB board */
