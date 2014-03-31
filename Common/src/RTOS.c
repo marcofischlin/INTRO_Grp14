@@ -16,7 +16,7 @@
 #if 1
 static portTASK_FUNCTION(T1, pvParameters) {
   for(;;) {
-    LED3_Neg();
+    //LED3_Neg();
     FRTOS1_vTaskDelay(500/portTICK_RATE_MS);
   }
 }
@@ -24,7 +24,7 @@ static portTASK_FUNCTION(T1, pvParameters) {
 #if 1
 static portTASK_FUNCTION(T2, pvParameters) {
   for(;;) {
-    LED2_Neg();
+    //LED2_Neg();
     FRTOS1_vTaskDelay(500/portTICK_RATE_MS);
   }
 }

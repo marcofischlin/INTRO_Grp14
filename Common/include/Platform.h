@@ -40,6 +40,14 @@
   /*!< Set to 1 if we have use debouncing */
 #define PL_HAS_RTOS			  (1)
   /*!< Set to 1 if we have use a RTOS */
+#define PL_HAS_SEMAPHORE      (1)
+  /*!< If we are using test tasks for semaphores */
+#define PL_HAS_SHELL          (0)
+  /*!< If we have a shell */
+#define PL_HAS_BLUETOOTH      (0 && PL_IS_FRDM)
+  /*!< If we are using an RTOS */
+#define PL_HAS_SHELL_QUEUE    (0)
+  /*!< If we have a message queue for the shell */
 
 
 #if PL_IS_FRDM

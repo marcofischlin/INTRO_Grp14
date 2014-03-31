@@ -92,9 +92,15 @@ void PL_Init(void) {
 #if PL_HAS_RTOS
   RTOS_Init();
 #endif
+#if PL_HAS_SEMAPHORE
+  SEM_Init();
+#endif
 }
 
 void PL_Deinit(void) { 
+#if PL_HAS_SEMAPHORE
+  SEM_Deinit();
+#endif
 #if PL_HAS_RTOS
   RTOS_Deinit();
 #endif
