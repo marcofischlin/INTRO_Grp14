@@ -125,7 +125,7 @@ static portTASK_FUNCTION(ShellTask, pvParameters) {
     	while((ch=SQUEUE_ReceiveChar()) && ch!='\0'){
     		ioLocal->stdOut(ch);
 #if PL_HAS_BLUETOOTH
-    		BT_stdio.stdOUT(ch); /* Copy to Bluetooth*/
+    		BT_stdio.stdOut(ch); /* Copy to Bluetooth*/
 #endif
     	}
       }
