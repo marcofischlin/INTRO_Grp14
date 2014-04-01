@@ -42,16 +42,16 @@
   /*!< Set to 1 if we have use a RTOS */
 #define PL_HAS_SEMAPHORE      (1)
   /*!< If we are using test tasks for semaphores */
-#define PL_HAS_SHELL          (0)
+#define PL_HAS_SHELL          (1)
   /*!< If we have a shell */
 #define PL_HAS_BLUETOOTH      (0 && PL_IS_FRDM)
   /*!< If we are using an RTOS */
-#define PL_HAS_SHELL_QUEUE    (0)
+#define PL_HAS_SHELL_QUEUE    (1)
   /*!< If we have a message queue for the shell */
 
 
 #if PL_IS_FRDM
-  #define PL_NOF_LED        3
+  #define PL_NOF_LEDS        3
      /*!< FRDM board has 3 LEDs (RGB) */
   #define PL_NOF_KEYS       1
      /*!< Number of push buttons on the FRDM board */
@@ -62,7 +62,7 @@
   #define PL_BUZZER_IS_HW_PWM (0)
      /*!< Set to 1 if buzzer uses a hardware PWM signal */
 #elif PL_IS_SRB
-  #define PL_NOF_LED        5
+  #define PL_NOF_LEDS        5
      /*!< We have 5 LED's on the SRB board */
   #define PL_NOF_KEYS       4
      /*!< Number of push buttons on the SRB board */

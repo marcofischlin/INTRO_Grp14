@@ -13,7 +13,7 @@
 #include "LED3.h"
 #include "WAIT1.h"
 
-#if 1
+#if 0
 static portTASK_FUNCTION(T1, pvParameters) {
   for(;;) {
     //LED3_Neg();
@@ -21,7 +21,7 @@ static portTASK_FUNCTION(T1, pvParameters) {
   }
 }
 #endif
-#if 1
+#if 0
 static portTASK_FUNCTION(T2, pvParameters) {
   for(;;) {
     //LED2_Neg();
@@ -32,12 +32,12 @@ static portTASK_FUNCTION(T2, pvParameters) {
 
 void RTOS_Init(void) {
   /*! \todo Add RTOS here */
-#if 1
+#if 0
   if (FRTOS1_xTaskCreate(T1, (signed portCHAR *)"T1", configMINIMAL_STACK_SIZE, NULL, 3, NULL) != pdPASS) {
     for(;;){} /* error */
   }
 #endif
-#if 1
+#if 0
   if (FRTOS1_xTaskCreate(T2, (signed portCHAR *)"T2", configMINIMAL_STACK_SIZE, NULL, 3, NULL) != pdPASS) {
     for(;;){} /* error */
   }

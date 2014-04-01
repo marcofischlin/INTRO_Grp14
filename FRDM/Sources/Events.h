@@ -57,6 +57,12 @@
 #include "BitIoLdd6.h"
 #include "FRTOS1.h"
 #include "UTIL1.h"
+#include "CLS1.h"
+#include "AS1.h"
+#include "ASerialLdd1.h"
+#include "BT1.h"
+#include "Serial1.h"
+#include "ASerialLdd2.h"
 
 #ifdef __cplusplus
 extern "C" {

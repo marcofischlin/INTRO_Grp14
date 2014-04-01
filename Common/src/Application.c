@@ -74,8 +74,11 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */
 #endif
-   // LED1_Neg();
+   //LED1_Neg();
+   //SHELL_SendString("Hello");
     FRTOS1_vTaskDelay(20/portTICK_RATE_MS);
+    
+    
   }
 }
 #else
