@@ -39,6 +39,9 @@ typedef enum EVNT_Handle {
 	  EVNT_SW4_RELEASED,    /*!< SW4 released */
 	  EVNT_SW4_LPRESSED,    /*!< SW4 long pressed */
 	#endif
+	#if PL_HAS_LINE_SENSOR
+	  EVNT_REF_START_STOP_CALIBRATION,
+	#endif
 	#endif
 	  EVNT_NOF_EVENTS       /*!< Must be last one! */
 	} EVNT_Handle;

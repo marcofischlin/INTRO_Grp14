@@ -10,7 +10,7 @@
 
 #include "Platform.h"
 
-#if PL_NOF_LED >= 1
+#if PL_NOF_LEDS >= 1
   #include "LED1.h"
 #else
   #define LED1_On()     /* do nothing */
@@ -29,7 +29,7 @@
     /*!< De-Initialize LED 1 */
 #endif
 
-#if PL_NOF_LED >= 2
+#if PL_NOF_LEDS >= 2
   #include "LED2.h"
 #else
   #define LED2_On()     /* do nothing */
@@ -48,7 +48,7 @@
     /*!< De-Initialize LED 2 */
 #endif
 
-#if PL_NOF_LED >= 3
+#if PL_NOF_LEDS >= 3
   #include "LED3.h"
 #else
   #define LED3_On()     /* do nothing */
@@ -67,7 +67,7 @@
     /*!< De-Initialize LED 3 */
 #endif
 
-#if PL_NOF_LED >= 4
+#if PL_NOF_LEDS >= 4
   #include "LED4.h"
 #else
   #define LED4_On()     /* do nothing */
@@ -86,7 +86,7 @@
     /*!< De-Initialize LED 4 */
 #endif
 
-#if PL_NOF_LED >= 5
+#if PL_NOF_LEDS >= 5
   #include "LED5.h"
 #else
   #define LED5_On()     /* do nothing */

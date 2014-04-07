@@ -18,7 +18,6 @@
 #define PL_IS_FRDM  (defined(PL_BOARD_IS_FRDM))
   /*!< Macro is defined through compiler option for the FRDM board */
 
-
 /* here all the different 'enable' macros for the application are defined */
 #define PL_HAS_LED            (1)
   /*!< Set to 1 if we have LEDs available, 0 otherwise */
@@ -48,6 +47,12 @@
   /*!< If we are using an RTOS */
 #define PL_HAS_SHELL_QUEUE    (1)
   /*!< If we have a message queue for the shell */
+#define PL_HAS_LINE_SENSOR    (1 && PL_IS_FRDM)
+  /*!< If we are having a line sensor */
+
+
+#define PL_HAS_RTOS_TRACE           (0)
+/* RTOS trace is not used */
 
 
 #if PL_IS_FRDM

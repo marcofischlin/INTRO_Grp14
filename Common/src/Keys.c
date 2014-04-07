@@ -13,6 +13,10 @@
 #if PL_HAS_EVENTS
   #include "Event.h"
 #endif
+#if PL_HAS_DEBOUNCE
+  #include "Debounce.h"
+  #include "KeyDebounce.h"
+#endif
 
 void KEY_Scan(void) {
   /*! \todo Implement handling of keys */

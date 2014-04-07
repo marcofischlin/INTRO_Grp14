@@ -35,11 +35,14 @@
 #if PL_HAS_SHELL_QUEUE
   #include "ShellQueue.h"
 #endif
+#if PL_HAS_LINE_SENSOR
+  #include "Reflectance.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
   /* \todo Implement using queues */
-	SQUEUE_Sendstring(msg);
+	SQUEUE_SendString(msg);
 	
 #else
   CLS1_SendStr(msg, CLS1_GetStdio()->stdOut);
@@ -83,6 +86,9 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #if BT1_PARSE_COMMAND_ENABLED
   BT1_ParseCommand,
 #endif
+#endif
+#if PL_HAS_LINE_SENSOR
+  REF_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

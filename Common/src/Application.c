@@ -40,23 +40,24 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	#endif
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
-	    LED1_Neg();
+		EVNT_SetEvent(EVNT_REF_START_STOP_CALIBRATION);
+		LED1_Neg();
 	    (void) BUZ_Beep(20,1000);
 	    break;
 	#endif
 	#if PL_NOF_KEYS>=2
 	  case EVNT_SW2_PRESSED:
-	    LED2_Neg();
+	    //LED2_Neg();
 	    break;
 	#endif
 	#if PL_NOF_KEYS>=3
 	  case EVNT_SW3_PRESSED:
-	    LED3_Neg();
+	    //LED3_Neg();
 	    break;
 	#endif
 	#if PL_NOF_KEYS>=4
 	  case EVNT_SW4_PRESSED:
-	    LED4_Neg();
+	    //LED4_Neg();
 	    break;
 	#endif
 

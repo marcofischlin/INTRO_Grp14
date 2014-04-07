@@ -30,7 +30,15 @@
 
 #include "Cpu.h"
 #include "Events.h"
+
+/* User includes (#include below this line is not maintained by Processor Expert) */
 #include "Platform.h"
+#if PL_HAS_TIMER
+  #include "Timer.h"
+#endif
+#if PL_HAS_KEYS
+  #include "Keys.h"
+#endif
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */

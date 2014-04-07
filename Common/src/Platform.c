@@ -41,6 +41,9 @@
 #if PL_HAS_SHELL_QUEUE
   #include "ShellQueue.h"
 #endif
+#if PL_HAS_LINE_SENSOR
+  #include "Reflectance.h"
+#endif
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {
@@ -118,9 +121,15 @@ void PL_Init(void) {
 #if PL_HAS_SHELL_QUEUE
   SQUEUE_Init();
 #endif
+#if PL_HAS_LINE_SENSOR
+  REF_Init();
+#endif
 }
 
 void PL_Deinit(void) {
+#if PL_HAS_LINE_SENSOR
+  REF_Deinit();
+#endif
 #if PL_HAS_SHELL_QUEUE
   SQUEUE_Deinit();
 #endif
