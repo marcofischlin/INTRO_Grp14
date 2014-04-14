@@ -79,6 +79,15 @@
 #include "IR6.h"
 #include "BitIoLdd13.h"
 #include "RefCnt.h"
+#include "DIRL.h"
+#include "BitIoLdd14.h"
+#include "PWML.h"
+#include "PwmLdd1.h"
+#include "DIRR.h"
+#include "BitIoLdd15.h"
+#include "PWMR.h"
+#include "PwmLdd2.h"
+#include "MOTTU.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -116,7 +125,7 @@ void Cpu_OnNMIINT(void);
 */
 void TI1_OnInterrupt(void);
 
-void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, char *pcTaskName);
+void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, signed portCHAR *pcTaskName);
 /*
 ** ===================================================================
 **     Event       :  FRTOS1_vApplicationStackOverflowHook (module Events)

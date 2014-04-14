@@ -49,6 +49,8 @@
   /*!< If we have a message queue for the shell */
 #define PL_HAS_LINE_SENSOR    (1 && PL_IS_FRDM)
   /*!< If we are having a line sensor */
+#define PL_HAS_MOTOR          (1 && PL_IS_FRDM)
+  /*!< Set to one if having DC motor driver */
 
 
 #define PL_HAS_RTOS_TRACE           (0)

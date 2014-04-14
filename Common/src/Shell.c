@@ -38,6 +38,9 @@
 #if PL_HAS_LINE_SENSOR
   #include "Reflectance.h"
 #endif
+#if PL_HAS_MOTOR
+  #include "Motor.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
@@ -89,6 +92,9 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_HAS_LINE_SENSOR
   REF_ParseCommand,
+#endif
+#if PL_HAS_MOTOR
+  MOT_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

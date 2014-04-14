@@ -40,7 +40,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	#endif
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
-		EVNT_SetEvent(EVNT_REF_START_STOP_CALIBRATION);
+		#if PL_HAS_LINE_SENSOR
+		  EVNT_SetEvent(EVNT_REF_START_STOP_CALIBRATION);
+		#endif
 		LED1_Neg();
 	    (void) BUZ_Beep(20,1000);
 	    break;
