@@ -47,6 +47,9 @@
 #if PL_HAS_MOTOR
   #include "Motor.h"
 #endif
+#if PL_HAS_ACCEL
+  #include "Accel.h"
+#endif
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {
@@ -130,9 +133,15 @@ void PL_Init(void) {
 #if PL_HAS_MOTOR
   MOT_Init();
 #endif
+#if PL_HAS_ACCEL
+  ACCEL_Init();
+#endif
 }
 
 void PL_Deinit(void) {
+#if PL_HAS_ACCEL
+  ACCEL_Deinit();
+#endif
 #if PL_HAS_MOTOR
   MOT_Deinit();
 #endif

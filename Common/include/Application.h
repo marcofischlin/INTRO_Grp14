@@ -10,6 +10,10 @@
 
 #include "Event.h"
 
+int x;
+int y;
+int z;
+
 void APP_Run(void);
 
 #endif /* APPLICATION_H_ */

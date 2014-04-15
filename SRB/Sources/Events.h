@@ -55,6 +55,11 @@
 #include "UTIL1.h"
 #include "CLS1.h"
 #include "AS1.h"
+#include "AD1.h"
+#include "MMA1.h"
+#include "G11.h"
+#include "G21.h"
+#include "Sleep1.h"
 
 
 void TI1_OnInterrupt(void);
@@ -88,7 +93,7 @@ void KB1_OnInterrupt(void);
 ** ===================================================================
 */
 
-void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, signed portCHAR *pcTaskName);
+void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, char *pcTaskName);
 /*
 ** ===================================================================
 **     Event       :  FRTOS1_vApplicationStackOverflowHook (module Events)

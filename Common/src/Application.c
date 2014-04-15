@@ -24,6 +24,12 @@
   #include "FRTOS1.h"
   #include "RTOS.h"
 #endif
+#if PL_HAS_MOTOR
+  #include "Motor.h"
+#endif
+#if PL_HAS_ACCEL
+  #include "Accel.h"
+#endif
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
@@ -71,17 +77,21 @@ static void APP_HandleEvent(EVNT_Handle event) {
 
 #if PL_HAS_RTOS
 static portTASK_FUNCTION(MainTask, pvParameters) {
-  (void)pvParameters; /* parameter not used */
+#if PL_IS_FRDM
+    ACCEL_LowLevelInit(); 
+#endif  
+    (void)pvParameters; /* parameter not used */
+    MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 20);
   for(;;) {
+	  ACCEL_GetValues(&x,&y,&z);
+	  if (z<800){
+		  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0); 
+	  }
     EVNT_HandleEvent(APP_HandleEvent);
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */
 #endif
-   //LED1_Neg();
-   //SHELL_SendString("Hello");
-    FRTOS1_vTaskDelay(20/portTICK_RATE_MS);
-    
-    
+    FRTOS1_vTaskDelay(20/portTICK_RATE_MS);  
   }
 }
 #else

@@ -41,6 +41,9 @@
 #if PL_HAS_MOTOR
   #include "Motor.h"
 #endif
+#if PL_HAS_ACCEL
+  #include "MMA1.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
@@ -95,6 +98,9 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_HAS_MOTOR
   MOT_ParseCommand,
+#endif
+#if PL_HAS_ACCEL
+  MMA1_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

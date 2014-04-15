@@ -51,6 +51,8 @@
   /*!< If we are having a line sensor */
 #define PL_HAS_MOTOR          (1 && PL_IS_FRDM)
   /*!< Set to one if having DC motor driver */
+#define PL_HAS_ACCEL         (1)
+  /*!< Set to one if having Accelometer */
 
 
 #define PL_HAS_RTOS_TRACE           (0)
