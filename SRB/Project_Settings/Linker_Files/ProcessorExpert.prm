@@ -5,7 +5,7 @@
 **     Project   : ProcessorExpert
 **     Processor : MC13213
 **     Compiler  : CodeWarrior HCS08 C Compiler
-**     Date/Time : 2014-02-18, 11:15, # CodeGen: 0
+**     Date/Time : 2014-04-28, 10:42, # CodeGen: 25
 **     Abstract  :
 **        This file is used by the linker. It describes files to be linked,
 **        memory ranges, stack size, etc. For detailed description of the PRM file
@@ -29,7 +29,8 @@ END
 SECTIONS
     Z_RAM                    =  READ_WRITE   0x0080 TO 0x009F;
     RAM                      =  READ_WRITE   0x00A0 TO 0x107F;
-    ROM                      =  READ_ONLY    0x182C TO 0xFFAF;
+    ROM                      =  READ_ONLY    0x182C TO 0xFBAF;
+    NVM_Config               =  READ_ONLY    0xFBB0 TO 0xFFAF;
 END
 
 PLACEMENT
