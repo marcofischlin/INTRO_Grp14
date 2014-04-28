@@ -51,12 +51,24 @@
   #include "Accel.h"
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#if PL_HAS_MOTOR_QUAD
+  #include "Q4CLeft.h"
+  #include "Q4CRight.h"
+#endif
+#if PL_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
+=======
+>>>>>>> origin/master
 #if PL_HAS_CONFIG_NVM 
   #include "NVM_CONFIG.h"
 #endif
 =======
 >>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
 
+>>>>>>> origin/master
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {
@@ -143,9 +155,23 @@ void PL_Init(void) {
 #if PL_HAS_ACCEL
   ACCEL_Init();
 #endif
+#if PL_HAS_MOTOR_QUAD
+  Q4CLeft_Init();
+  Q4CRight_Init();
+#endif
+#if PL_HAS_MOTOR_TACHO
+  TACHO_Init();
+#endif
 }
 
 void PL_Deinit(void) {
+#if PL_HAS_MOTOR_TACHO
+  TACHO_Deinit();
+#endif
+#if PL_HAS_MOTOR_QUAD
+  Q4CLeft_Deinit();
+  Q4CRight_Deinit();
+#endif
 #if PL_HAS_ACCEL
   ACCEL_Deinit();
 #endif

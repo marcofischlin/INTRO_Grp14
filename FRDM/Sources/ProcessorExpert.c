@@ -88,10 +88,27 @@
 #include "MMA1.h"
 #include "GI2C1.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
 =======
 >>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
+=======
+#include "Q4CLeft.h"
+#include "C11.h"
+#include "BitIoLdd16.h"
+#include "C21.h"
+#include "BitIoLdd17.h"
+#include "Q4CRight.h"
+#include "C12.h"
+#include "BitIoLdd19.h"
+#include "C23.h"
+#include "BitIoLdd20.h"
+=======
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
+>>>>>>> origin/master
+>>>>>>> origin/master
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

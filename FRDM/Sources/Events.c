@@ -31,6 +31,10 @@
 #include "Events.h"
 #include "Platform.h"
 
+#if PL_HAS_TIMER
+	#include "Timer.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif 
@@ -92,7 +96,7 @@ void TI1_OnInterrupt(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, char *pcTaskName)
+void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, signed portCHAR *pcTaskName)
 {
   /* This will get called if a stack overflow is detected during the context
      switch.  Set configCHECK_FOR_STACK_OVERFLOWS to 2 to also check for stack

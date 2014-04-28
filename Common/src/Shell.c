@@ -44,6 +44,10 @@
 #if PL_HAS_ACCEL
   #include "MMA1.h"
 #endif
+#if PL_HAS_MOTOR_QUAD
+  #include "Q4CLeft.h"
+  #include "Q4CRight.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
@@ -101,6 +105,10 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_HAS_ACCEL
   MMA1_ParseCommand,
+#endif
+#if PL_HAS_MOTOR_QUAD
+  Q4CLeft_ParseCommand,
+  Q4CRight_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

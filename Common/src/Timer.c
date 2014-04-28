@@ -31,6 +31,10 @@ void TMR_OnInterrupt(void) {
 #if PL_HAS_TRIGGER
   TRG_IncTick();
 #endif
+#if PL_HAS_MOTOR_QUAD
+  Q4CLeft_Sample();
+  Q4CRight_Sample();
+#endif
 }
 
 /*! \brief Timer driver initialization */

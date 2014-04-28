@@ -51,13 +51,25 @@
   /*!< If we are having a line sensor */
 #define PL_HAS_MOTOR          (1 && PL_IS_FRDM)
   /*!< Set to one if having DC motor driver */
+#define PL_HAS_ACCEL         (1)
 #define PL_HAS_ACCEL          (1)
   /*!< Set to one if having Accelometer */
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define PL_HAS_CONFIG_NVM     (1)
   /*!< Set to one if using non-volatile memory for configuration data */
 =======
 >>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
+=======
+#define PL_HAS_MOTOR_QAUD         (1 && PL_IS_FRDM)
+  /*!< Set to one if having Quadratur Encoder */
+#define PL_HAS_MOTOR_TACHO         (1 && PL_IS_FRDM)
+  /*!< Set to one if having Tacho */
+=======
+#define PL_HAS_CONFIG_NVM     (1)
+  /*!< Set to one if using non-volatile memory for configuration data */
+>>>>>>> origin/master
+>>>>>>> origin/master
 
 
 #define PL_HAS_RTOS_TRACE           (0)
