@@ -56,6 +56,7 @@
 #include "G11.h"
 #include "G21.h"
 #include "Sleep1.h"
+#include "IFsh1.h"
 #include "Application.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"

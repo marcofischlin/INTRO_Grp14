@@ -60,6 +60,7 @@
 #include "G11.h"
 #include "G21.h"
 #include "Sleep1.h"
+#include "IFsh1.h"
 
 
 void TI1_OnInterrupt(void);

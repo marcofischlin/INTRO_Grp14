@@ -50,6 +50,10 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
+#if PL_HAS_CONFIG_NVM 
+  #include "NVM_CONFIG.h"
+#endif
+
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {

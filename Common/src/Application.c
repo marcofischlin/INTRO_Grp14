@@ -79,14 +79,21 @@ static void APP_HandleEvent(EVNT_Handle event) {
 static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_IS_FRDM
     ACCEL_LowLevelInit(); 
-#endif  
+#endif 
     (void)pvParameters; /* parameter not used */
+#if PL_HAS_MOTOR
     MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 20);
+#endif
   for(;;) {
+#if PL_HAS_ACCEL && PL_HAS_MOTOR
+	  int16_t x;
+	  int16_t y;
+	  int16_t z;
 	  ACCEL_GetValues(&x,&y,&z);
 	  if (z<800){
-		  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0); 
+	  MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), 0); 
 	  }
+#endif
     EVNT_HandleEvent(APP_HandleEvent);
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */

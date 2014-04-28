@@ -91,6 +91,8 @@
 #include "I2C1.h"
 #include "MMA1.h"
 #include "GI2C1.h"
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
 
 #ifdef __cplusplus
 extern "C" {
