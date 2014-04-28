@@ -3,8 +3,13 @@
   <Header>
     <Name>ProcessorExpert</Name>
     <SavedBy>Röms</SavedBy>
+<<<<<<< HEAD
     <ModificationStamp>34</ModificationStamp>
     <Date>2014-04-28</Date>
+=======
+    <ModificationStamp>33</ModificationStamp>
+    <Date>2014-04-15</Date>
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.8.1.RT5_b1349-1839</PEversion>
   </Header>
@@ -28,7 +33,11 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
+<<<<<<< HEAD
     <ProjectCompNumb>125</ProjectCompNumb>
+=======
+    <ProjectCompNumb>120</ProjectCompNumb>
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>true</AssignInitComponentNameToPrph>
@@ -4500,7 +4509,11 @@
       <Count>0</Count>
     </BoolList_FpgaConfig>
     <BoolList_BeanConfig>
+<<<<<<< HEAD
       <Count>33</Count>
+=======
+      <Count>32</Count>
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
       <ItemId0>2</ItemId0>
       <Value0>true</Value0>
       <ItemId1>6</ItemId1>
@@ -4565,8 +4578,11 @@
       <Value30>true</Value30>
       <ItemId31>116</ItemId31>
       <Value31>true</Value31>
+<<<<<<< HEAD
       <ItemId32>120</ItemId32>
       <Value32>true</Value32>
+=======
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
     </BoolList_BeanConfig>
     <BoolList_TaskConfig>
       <Count>0</Count>
@@ -33004,6 +33020,7 @@
       </ItemState>
     </Events>
   </Bean>
+<<<<<<< HEAD
   <Bean>
     <BeanType>IntFLASH</BeanType>
     <Name>IFsh1</Name>
@@ -35067,5 +35084,7 @@
       </ItemState>
     </Events>
   </Bean>
+=======
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
 </PEproject>
 

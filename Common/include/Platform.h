@@ -53,8 +53,11 @@
   /*!< Set to one if having DC motor driver */
 #define PL_HAS_ACCEL          (1)
   /*!< Set to one if having Accelometer */
+<<<<<<< HEAD
 #define PL_HAS_CONFIG_NVM     (1)
   /*!< Set to one if using non-volatile memory for configuration data */
+=======
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
 
 
 #define PL_HAS_RTOS_TRACE           (0)

@@ -87,8 +87,11 @@
 #include "I2C1.h"
 #include "MMA1.h"
 #include "GI2C1.h"
+<<<<<<< HEAD
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
+=======
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

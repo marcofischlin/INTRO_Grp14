@@ -50,9 +50,12 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
+<<<<<<< HEAD
 #if PL_HAS_CONFIG_NVM 
   #include "NVM_CONFIG.h"
 #endif
+=======
+>>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
 
 
 #if PL_HAS_LED
