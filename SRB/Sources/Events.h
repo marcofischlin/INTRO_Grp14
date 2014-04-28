@@ -93,7 +93,7 @@ void KB1_OnInterrupt(void);
 ** ===================================================================
 */
 
-void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, char *pcTaskName);
+void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, signed portCHAR *pcTaskName);
 /*
 ** ===================================================================
 **     Event       :  FRTOS1_vApplicationStackOverflowHook (module Events)
