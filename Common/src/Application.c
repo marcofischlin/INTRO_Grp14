@@ -30,6 +30,9 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
+#if PL_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
@@ -98,7 +101,10 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */
 #endif
-    FRTOS1_vTaskDelay(20/portTICK_RATE_MS);  
+#if PL_HAS_MOTOR_TACHO
+    TACHO_CalcSpeed();
+#endif
+    FRTOS1_vTaskDelay(10/portTICK_RATE_MS);  
   }
 }
 #else

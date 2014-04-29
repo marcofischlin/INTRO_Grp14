@@ -55,10 +55,18 @@
   /*!< Set to one if having Accelometer */
 #define PL_HAS_CONFIG_NVM     (1)
   /*!< Set to one if using non-volatile memory for configuration data */
-#define PL_HAS_MOTOR_QAUD         (1 && PL_IS_FRDM)
+#define PL_HAS_MOTOR_QUAD         (1 && PL_IS_FRDM)
   /*!< Set to one if having Quadratur Encoder */
 #define PL_HAS_MOTOR_TACHO         (1 && PL_IS_FRDM)
   /*!< Set to one if having Tacho */
+#define PL_HAS_SHELL_TRACE           (1)
+/* Set to one if shell trace used */
+#define PL_HAS_PID           (0)
+/* Set to one if having PID */
+#define PL_HAS_WATCHDOG           (0)
+/* Set to one if having Watchdog */
+#define PL_HAS_FREEMASTER           (1)
+/* Set to one if having Freemaster */
 
 
 #define PL_HAS_RTOS_TRACE           (0)

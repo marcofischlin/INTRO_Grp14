@@ -11,7 +11,7 @@
 
 //#include "FreeRTOS.h"
 
-#define TMR_TICK_MS  0.5 /*portTICK_RATE_MS */
+#define TMR_TICK_MS  1 /*portTICK_RATE_MS */
   /*!< we get called every x ms */
 
 /*! \brief Function called from timer interrupt every TMR_TICK_MS. */

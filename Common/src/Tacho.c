@@ -24,6 +24,8 @@
   /*!< speed sample period in ms. Make sure that speed is sampled at the given rate. */
 #define NOF_HISTORY (16U+1U) 
   /*!< number of samples for speed calculation (>0):the more, the better, but the slower. */
+#define TACHO_SPEED_CALCULATE_TIME (10)
+  /*!< speed calculate period in ms. */ 
 
 static volatile uint16_t TACHO_LeftPosHistory[NOF_HISTORY], TACHO_RightPosHistory[NOF_HISTORY];
   /*!< for better accuracy, we calculate the speed over some samples */
@@ -42,11 +44,81 @@ int32_t TACHO_GetSpeed(bool isLeft) {
 }
 
 void TACHO_CalcSpeed(void) {
+#if 1
+  /* we calculate the speed as follow:
+                              1000         
+  steps/sec =  delta * ----------------- 
+                       samplePeriod (ms) 
+  As this function may be called very frequently, it is important to make it as efficient as possible!
+   */
+  int16_t deltaLeft, deltaRight, newLeft, newRight, oldLeft, oldRight;
+  int32_t speedLeft, speedRight;
+  bool negLeft, negRight;
+
+  EnterCritical();
+  oldLeft = (int16_t)TACHO_LeftPosHistory[TACHO_PosHistory_Index]; /* oldest left entry */
+  oldRight = (int16_t)TACHO_RightPosHistory[TACHO_PosHistory_Index]; /* oldest right entry */
+  if (TACHO_PosHistory_Index==0) { /* get newest entry */
+    newLeft = (int16_t)TACHO_LeftPosHistory[NOF_HISTORY-1];
+    newRight = (int16_t)TACHO_RightPosHistory[NOF_HISTORY-1];
+  } else {
+    newLeft = (int16_t)TACHO_LeftPosHistory[TACHO_PosHistory_Index-1];
+    newRight = (int16_t)TACHO_RightPosHistory[TACHO_PosHistory_Index-1];
+  }
+  ExitCritical();
+  deltaLeft = oldLeft-newLeft; /* delta of oldest position and most recent one */
+  /* use unsigned arithmetic */
+  if (deltaLeft < 0) {
+    deltaLeft = -deltaLeft;
+    negLeft = TRUE;
+  } else {
+    negLeft = FALSE;
+  }
+  deltaRight = oldRight-newRight; /* delta of oldest position and most recent one */
+  /* use unsigned arithmetic */
+  if (deltaRight < 0) {
+    deltaRight = -deltaRight;
+    negRight = TRUE;
+  } else {
+    negRight = FALSE;
+  }
+  /* calculate speed. this is based on the delta and the time (number of samples or entries in the history table) */
+  speedLeft = (int32_t)(deltaLeft * 1000/(TACHO_SAMPLE_PERIOD_MS*(NOF_HISTORY-1)));
+  if (negLeft) {
+    speedLeft = -speedLeft;
+  }
+  speedRight = (int32_t)(deltaRight * 1000/(TACHO_SAMPLE_PERIOD_MS*(NOF_HISTORY-1)));
+  if (negRight) {
+    speedRight = -speedRight;
+  }
+  TACHO_currLeftSpeed = -speedLeft; /* store current speed in global variable */
+  TACHO_currRightSpeed = -speedRight; /* store current speed in global variable */
+#else
   /*! \todo Implement function */ 
+#endif
 }
 
 void TACHO_Sample(void) {
+#if 1
+  static int cnt = 0;
+  /* get called from the RTOS tick counter. Divide the frequency. */
+  cnt += portTICK_RATE_MS;
+  if (cnt < TACHO_SAMPLE_PERIOD_MS) {
+    return;
+  }
+  cnt = 0; /* reset counter */
+  /* left */
+  TACHO_LeftPosHistory[TACHO_PosHistory_Index] = Q4CLeft_GetPos();
+  TACHO_RightPosHistory[TACHO_PosHistory_Index] = Q4CRight_GetPos();
+  TACHO_PosHistory_Index++;
+  if (TACHO_PosHistory_Index >= NOF_HISTORY) {
+    TACHO_PosHistory_Index = 0;
+  }
+  /* temporary only */
+  //TACHO_CalcSpeed();
+#else
   /*! \todo Implement function */ 
+#endif
 }
 
 #if PL_HAS_SHELL

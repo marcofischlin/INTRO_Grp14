@@ -50,7 +50,7 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
-#if PL_HAS_MOTOR_QAUD
+#if PL_HAS_MOTOR_QUAD
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
 #endif
@@ -59,6 +59,9 @@
 #endif
 #if PL_HAS_CONFIG_NVM 
   #include "NVM_CONFIG.h"
+#endif
+#if PL_HAS_SHELL_TRACE
+  #include "ShellTrace.h"
 #endif
 
 #if PL_HAS_LED
@@ -153,9 +156,15 @@ void PL_Init(void) {
 #if PL_HAS_MOTOR_TACHO
   TACHO_Init();
 #endif
+#if PL_HAS_SHELL_TRACE
+  TRACE_Init();
+#endif
 }
 
 void PL_Deinit(void) {
+#if PL_HAS_SHELL_TRACE
+  TRACE_Deinit();
+#endif
 #if PL_HAS_MOTOR_TACHO
   TACHO_Deinit();
 #endif

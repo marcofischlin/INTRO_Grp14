@@ -43,7 +43,7 @@ static portTASK_FUNCTION(vMasterTask, pvParameters) {
   RTOSTRC1_vTraceSetQueueName(sem, "IPC_Sem");
 #endif
   /* create slave task */
-  if (FRTOS1_xTaskCreate(vSlaveTask, "Slave", configMINIMAL_STACK_SIZE, sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(vSlaveTask, (unsigned char*)"Slave", configMINIMAL_STACK_SIZE, sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error */
   }
   for(;;) {
@@ -62,7 +62,7 @@ void SEM_Deinit(void) {
 /*! \brief Initializes module */
 void SEM_Init(void) {
 #if USE_SEMAPHORES
-  if (FRTOS1_xTaskCreate(vMasterTask, "Master", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(vMasterTask, (unsigned char*)"Master", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error */
   }
 #endif

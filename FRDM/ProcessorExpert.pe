@@ -35258,7 +35258,7 @@
               <RegCompType>EventCntr_LDD</RegCompType>
               <InheritedComponentState>
                 <BeanType>EventCntr_LDD</BeanType>
-                <Name />
+                <Name>EventCntrLdd2</Name>
                 <CompNumb>124</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
@@ -35273,7 +35273,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value />
+                    <Value>EventCntrLdd2</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>Tmr</ItemSymbol>
@@ -38002,7 +38002,7 @@
               <RegCompType>EventCntr_LDD</RegCompType>
               <InheritedComponentState>
                 <BeanType>EventCntr_LDD</BeanType>
-                <Name />
+                <Name>EventCntrLdd1</Name>
                 <CompNumb>133</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
@@ -38017,7 +38017,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value />
+                    <Value>EventCntrLdd1</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>Tmr</ItemSymbol>

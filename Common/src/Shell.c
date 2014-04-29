@@ -44,9 +44,15 @@
 #if PL_HAS_ACCEL
   #include "MMA1.h"
 #endif
-#if PL_HAS_MOTOR_QAUD
+#if PL_HAS_MOTOR_QUAD
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
+#endif
+#if PL_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
+#if PL_HAS_SHELL_TRACE
+  #include "ShellTrace.h"
 #endif
 
 void SHELL_SendString(unsigned char *msg) {
@@ -106,9 +112,15 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #if PL_HAS_ACCEL
   MMA1_ParseCommand,
 #endif
-#if PL_HAS_MOTOR_QAUD
+#if PL_HAS_MOTOR_QUAD
   Q4CLeft_ParseCommand,
   Q4CRight_ParseCommand,
+#endif
+#if PL_HAS_MOTOR_TACHO
+  TACHO_ParseCommand,
+#endif
+#if PL_HAS_SHELL_TRACE
+  TRACE_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

@@ -14,6 +14,13 @@
 #if PL_HAS_TRIGGER
   #include "Trigger.h"
 #endif
+#if PL_HAS_MOTOR_QUAD
+  #include "Q4CLeft.h"
+  #include "Q4CRight.h"
+#endif
+#if PL_HAS_MOTOR_TACHO
+  #include "Tacho.h"
+#endif
 
 void TMR_OnInterrupt(void) {
   /* this one gets called from an interrupt!!!! */
@@ -34,6 +41,9 @@ void TMR_OnInterrupt(void) {
 #if PL_HAS_MOTOR_QUAD
   Q4CLeft_Sample();
   Q4CRight_Sample();
+#endif
+#if PL_HAS_MOTOR_TACHO
+  TACHO_Sample();
 #endif
 }
 
