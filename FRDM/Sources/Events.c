@@ -172,6 +172,40 @@ void FRTOS1_vApplicationMallocFailedHook(void)
 
 /*
 ** ===================================================================
+**     Event       :  IFsh1_OnRequestBus (module Events)
+**
+**     Component   :  IFsh1 [GenericI2C]
+**     Description :
+**         User event which will be called before accessing the I2C bus.
+**         Useful for starting a critical section.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void IFsh1_OnRequestBus(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  IFsh1_OnReleaseBus (module Events)
+**
+**     Component   :  IFsh1 [GenericI2C]
+**     Description :
+**         User event which will be called after accessing the I2C bus.
+**         Useful for ending a critical section.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void IFsh1_OnReleaseBus(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
 **     Event       :  GI2C1_OnRequestBus (module Events)
 **
 **     Component   :  GI2C1 [GenericI2C]

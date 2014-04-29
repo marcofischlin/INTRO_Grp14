@@ -88,16 +88,10 @@
 #include "PWMR.h"
 #include "PwmLdd2.h"
 #include "MOTTU.h"
-#include "I2C1.h"
 #include "MMA1.h"
 #include "GI2C1.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
-=======
->>>>>>> parent of a77150a... Implement Quadrature Encoders, RTOS Tick Time 1000kHz, TI1 = 0.5ms
-=======
 #include "Q4CLeft.h"
 #include "C11.h"
 #include "BitIoLdd16.h"
@@ -108,11 +102,7 @@
 #include "BitIoLdd19.h"
 #include "C23.h"
 #include "BitIoLdd20.h"
-=======
-#include "IFsh1.h"
-#include "IntFlashLdd1.h"
->>>>>>> origin/master
->>>>>>> origin/master
+#include "I2C1.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -204,6 +194,34 @@ void FRTOS1_vApplicationMallocFailedHook(void);
 **     Description :
 **         If enabled, the RTOS will call this hook in case memory
 **         allocation failed.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void IFsh1_OnRequestBus(void);
+/*
+** ===================================================================
+**     Event       :  IFsh1_OnRequestBus (module Events)
+**
+**     Component   :  IFsh1 [GenericI2C]
+**     Description :
+**         User event which will be called before accessing the I2C bus.
+**         Useful for starting a critical section.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void IFsh1_OnReleaseBus(void);
+/*
+** ===================================================================
+**     Event       :  IFsh1_OnReleaseBus (module Events)
+**
+**     Component   :  IFsh1 [GenericI2C]
+**     Description :
+**         User event which will be called after accessing the I2C bus.
+**         Useful for ending a critical section.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================

@@ -44,7 +44,7 @@
 #if PL_HAS_ACCEL
   #include "MMA1.h"
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_MOTOR_QAUD
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
 #endif
@@ -106,7 +106,7 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #if PL_HAS_ACCEL
   MMA1_ParseCommand,
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_MOTOR_QAUD
   Q4CLeft_ParseCommand,
   Q4CRight_ParseCommand,
 #endif
@@ -171,7 +171,7 @@ void SHELL_Init(void) {
   (void)CLS1_SetStdio(&BT_stdio); /* use the Bluetooth stdio as default */
 #endif
 #if PL_HAS_RTOS
-  if (FRTOS1_xTaskCreate(ShellTask, "Shell", configMINIMAL_STACK_SIZE+100, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(ShellTask, (unsigned char*)"Shell", configMINIMAL_STACK_SIZE+100, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error */
   }
 #endif

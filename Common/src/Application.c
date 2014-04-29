@@ -119,7 +119,7 @@ void APP_Run(void) {
 	#if PL_HAS_RTOS
 	  if (FRTOS1_xTaskCreate(
 	        MainTask,  /* pointer to the task */
-	        "Main", /* task name for kernel awareness debugging */
+	        (unsigned char*)"Main", /* task name for kernel awareness debugging */
 	        configMINIMAL_STACK_SIZE, /* task stack size */
 	        (void*)NULL, /* optional task startup argument */
 	        tskIDLE_PRIORITY,  /* initial priority */
