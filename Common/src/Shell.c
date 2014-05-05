@@ -54,6 +54,9 @@
 #if PL_HAS_SHELL_TRACE
   #include "ShellTrace.h"
 #endif
+#if PL_HAS_ULTRASONIC
+  #include "Ultrasonic.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
@@ -121,6 +124,9 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_HAS_SHELL_TRACE
   TRACE_ParseCommand,
+#endif
+#if PL_HAS_ULTRASONIC
+  US_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

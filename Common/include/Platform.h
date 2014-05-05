@@ -55,23 +55,31 @@
   /*!< Set to one if having Accelometer */
 #define PL_HAS_CONFIG_NVM     (1)
   /*!< Set to one if using non-volatile memory for configuration data */
-#define PL_HAS_MOTOR_QUAD         (1 && PL_IS_FRDM)
-  /*!< Set to one if having Quadratur Encoder */
-#define PL_HAS_MOTOR_TACHO         (1 && PL_IS_FRDM)
-  /*!< Set to one if having Tacho */
-#define PL_HAS_SHELL_TRACE           (0)
-/* Set to one if shell trace used */
-#define PL_HAS_PID           (0)
-/* Set to one if having PID */
-#define PL_HAS_WATCHDOG           (0)
-/* Set to one if having Watchdog */
-#define PL_HAS_FREEMASTER           (1)
-/* Set to one if having Freemaster */
+
+#define PL_HAS_QUADRATURE     (1 && PL_IS_FRDM)
+  /*!< Set to one if having quadrature sensor */
+#define PL_HAS_MOTOR_TACHO    (1 && PL_HAS_QUADRATURE)
+  /*!< Set to one if we measure the speed */
+#define PL_HAS_SHELL_TRACE    (1)
+  /*!< Set to one if we trace values to the shell */
+
+#define PL_HAS_PID            (0 && PL_HAS_MOTOR)
+  /*!< Set to one if we we have motor PID closed loop control */
+#define PL_HAS_DRIVE          (1 && PL_HAS_PID)
+  /*!< Set to one if we we have a drive task */
+#define PL_HAS_ULTRASONIC     (1 && PL_IS_FRDM)
+  /*!< Set to one if we have an ultrasonic distance measurement sensor */
+#define PL_HAS_RADIO          (0)
+  /*!< Set to one if we have a radio transceiver */
+
+#define PL_HAS_FREEMASTER     (0)
+  /*!< Set to one if we are using FreeMaster. Need to disable UART in Shell! */
+#define PL_HAS_WATCHDOG       (0)
+  /*!< Set to one if using watchdog timer */
 
 
-#define PL_HAS_RTOS_TRACE           (0)
-/* RTOS trace is not used */
-
+#define PL_HAS_RTOS_TRACE     (0 && PL_HAS_RTOS && PL_IS_FRDM)
+  /*!< Set to one if using Percepio Trace */
 
 #if PL_IS_FRDM
   #define PL_NOF_LEDS        3

@@ -34,6 +34,9 @@
 #if PL_HAS_TIMER
 	#include "Timer.h"
 #endif
+#if PL_HAS_ULTRASONIC
+	#include "Ultrasonic.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,7 +99,7 @@ void TI1_OnInterrupt(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, signed portCHAR *pcTaskName)
+void FRTOS1_vApplicationStackOverflowHook(xTaskHandle pxTask, char *pcTaskName)
 {
   /* This will get called if a stack overflow is detected during the context
      switch.  Set configCHECK_FOR_STACK_OVERFLOWS to 2 to also check for stack
@@ -125,6 +128,7 @@ void FRTOS1_vApplicationTickHook(void)
 {
   /* Called for every RTOS tick. */
   /* Write your code here ... */
+	TMR_OnInterrupt();
 }
 
 /*
@@ -260,6 +264,7 @@ void GI2C1_OnReleaseBus(void)
 void TU_US_OnCounterRestart(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
+	US_EventEchoCapture(UserDataPtr);
 }
 
 /*
@@ -284,6 +289,7 @@ void TU_US_OnCounterRestart(LDD_TUserData *UserDataPtr)
 void TU_US_OnChannel0(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
+	US_EventEchoOverflow(UserDataPtr);
 }
 
 /* END Events */

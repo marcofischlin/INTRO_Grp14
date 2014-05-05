@@ -63,6 +63,9 @@
 #if PL_HAS_SHELL_TRACE
   #include "ShellTrace.h"
 #endif
+#if PL_HAS_ULTRASONIC
+  #include "Ultrasonic.h"
+#endif
 
 #if PL_HAS_LED
 static void PL_LedInit(void) {
@@ -159,9 +162,15 @@ void PL_Init(void) {
 #if PL_HAS_SHELL_TRACE
   TRACE_Init();
 #endif
+#if PL_HAS_ULTRASONIC
+  US_Init();
+#endif
 }
 
 void PL_Deinit(void) {
+#if PL_HAS_ULTRASONIC
+  US_Deinit();
+#endif
 #if PL_HAS_SHELL_TRACE
   TRACE_Deinit();
 #endif

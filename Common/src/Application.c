@@ -33,6 +33,9 @@
 #if PL_HAS_MOTOR_TACHO
   #include "Tacho.h"
 #endif
+#if PL_HAS_ULTRASONIC
+  #include "Ultrasonic.h"
+#endif
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
@@ -80,6 +83,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 
 #if PL_HAS_RTOS
 static portTASK_FUNCTION(MainTask, pvParameters) {
+#if PL_HAS_ULTRASONIC	
+	(void)US_Measure_us();
+#endif	
 #if PL_IS_FRDM
     ACCEL_LowLevelInit(); 
 #endif 
@@ -104,7 +110,7 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_HAS_MOTOR_TACHO
     TACHO_CalcSpeed();
 #endif
-    FRTOS1_vTaskDelay(10/portTICK_RATE_MS);  
+    FRTOS1_vTaskDelay(20/portTICK_RATE_MS);  
   }
 }
 #else
