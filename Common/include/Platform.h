@@ -59,7 +59,7 @@
   /*!< Set to one if having Quadratur Encoder */
 #define PL_HAS_MOTOR_TACHO         (1 && PL_IS_FRDM)
   /*!< Set to one if having Tacho */
-#define PL_HAS_SHELL_TRACE           (1)
+#define PL_HAS_SHELL_TRACE           (0)
 /* Set to one if shell trace used */
 #define PL_HAS_PID           (0)
 /* Set to one if having PID */

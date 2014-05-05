@@ -99,6 +99,8 @@
 #include "C23.h"
 #include "BitIoLdd20.h"
 #include "I2C1.h"
+#include "TU_US.h"
+#include "TRIG.h"
 
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
