@@ -125,6 +125,7 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
         cnt++;
       }
     }
+    if(RefCnt_GetCounterValue(timerHandle) > 0xE000) break; // experimental timeout
   } while(cnt!=REF_NOF_SENSORS);
   LED_IR_Off();
 }

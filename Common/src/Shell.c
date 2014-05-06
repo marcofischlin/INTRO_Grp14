@@ -57,6 +57,12 @@
 #if PL_HAS_ULTRASONIC
   #include "Ultrasonic.h"
 #endif
+#if PL_HAS_DRIVE
+  #include "Drive.h"
+#endif
+#if PL_HAS_PID
+  #include "Pid.h"
+#endif
 
 void SHELL_SendString(unsigned char *msg) {
 #if PL_HAS_SHELL_QUEUE
@@ -127,6 +133,12 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if PL_HAS_ULTRASONIC
   US_ParseCommand,
+#endif
+#if PL_HAS_DRIVE
+  DRV_ParseCommand,
+#endif
+#if PL_HAS_PID
+  PID_ParseCommand,
 #endif
   NULL /* Sentinel */
 };
