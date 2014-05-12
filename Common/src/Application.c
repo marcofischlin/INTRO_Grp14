@@ -20,6 +20,9 @@
 #if PL_HAS_BUZZER
   #include "Buzzer.h"
 #endif
+#if PL_HAS_TIMER
+  #include "Timer.h"
+#endif
 #if PL_HAS_RTOS
   #include "FRTOS1.h"
   #include "RTOS.h"
@@ -40,6 +43,15 @@
   #include "Drive.h"
 #endif
 
+typedef enum {
+  APP_STATE_INIT,
+  APP_STATE_WAIT,
+  APP_STATE_SEARCH_OPPONENT,
+  APP_STATE_FOUND_OPPONENT,
+  APP_STATE_BOARDER_REACHED
+} AppStateType;
+static volatile AppStateType appState = APP_STATE_INIT; /* state machine state */
+
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
 	    case EVNT_INIT:
@@ -56,8 +68,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	      
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
-			LED1_Neg();
-		    (void) BUZ_Beep(20,1000);
+		  while(!TMR_wate_5sec()){}
+
+		  appState = APP_STATE_SEARCH_OPPONENT;
 		  break;
 		  
 	  case EVNT_SW1_LPRESSED:
@@ -87,14 +100,16 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			#if PL_HAS_MOTOR
 	
 			DRV_SetSpeed(0, 0);
+			appState = APP_STATE_WAIT;
 			#endif
 			break;
 		
 		case EVNT_FOUND_OPPONENT:			
 			#if PL_HAS_MOTOR
 	
-			DRV_SetSpeed(100, 100);
+			DRV_SetSpeed(80, 80);
 			#endif
+			appState = APP_STATE_FOUND_OPPONENT;
 			break;
 			
 		case EVNT_REF_FULLY_ON_BOARDER:			
@@ -102,6 +117,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			
 			DRV_SetSpeed(-60, -60);
 			#endif
+			appState = APP_STATE_BOARDER_REACHED;
 			break;
 			
 		case EVNT_REF_LEFT_ON_BOARDER:			
@@ -109,6 +125,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			
 			DRV_SetSpeed(-40, -60);
 			#endif
+			appState = APP_STATE_BOARDER_REACHED;
 			break;
 			
 		case EVNT_REF_RIGHT_ON_BOARDER:			
@@ -116,6 +133,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			
 			DRV_SetSpeed(-60, -40);
 			#endif
+			appState = APP_STATE_BOARDER_REACHED;
 			break;
 			
 	
@@ -123,6 +141,49 @@ static void APP_HandleEvent(EVNT_Handle event) {
 		  break;
 	  }
 	}
+
+uint16 driveBackCnt;
+static void APP_StateMachine(void)
+{
+	switch (appState){
+	
+		case APP_STATE_INIT:
+			appState = APP_STATE_WAIT;
+			break;
+
+		case APP_STATE_WAIT:
+			break;
+
+		case APP_STATE_SEARCH_OPPONENT:			
+			#if PL_HAS_MOTOR
+				DRV_SetSpeed(50, -50);
+			#endif
+			
+			break;
+
+		case APP_STATE_FOUND_OPPONENT:
+			
+			break;
+
+		case APP_STATE_BOARDER_REACHED:
+			driveBackCnt += 20;
+			
+			if (driveBackCnt == 1000)
+			{			
+				#if PL_HAS_MOTOR
+					DRV_SetSpeed(50, -50);
+				#endif	
+				appState = APP_STATE_SEARCH_OPPONENT;
+			}
+			break;
+			
+
+		default:
+			break;
+			
+		
+	}
+}
 
 
 #if PL_HAS_RTOS
@@ -159,6 +220,8 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 		EVNT_SetEvent(EVNT_FOUND_OPPONENT);
 	}
 #endif
+	
+	APP_StateMachine();
 	
     FRTOS1_vTaskDelay(20/portTICK_RATE_MS);  
   }
