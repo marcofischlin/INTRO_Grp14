@@ -21,6 +21,9 @@
 #if PL_HAS_MOTOR_TACHO
   #include "Tacho.h"
 #endif
+#if PL_HAS_BUZZER
+  #include "Buzzer.h"
+#endif
 
 void TMR_OnInterrupt(void) {
   /* this one gets called from an interrupt!!!! */
@@ -45,6 +48,40 @@ void TMR_OnInterrupt(void) {
 #if PL_HAS_MOTOR_TACHO
   TACHO_Sample();
 #endif
+  
+  INC_5s_Timer();
+}
+
+uint16_t value = 0;
+bool trigger;
+void INC_5s_Timer(void)
+{
+	if(trigger)
+	{
+		value++;
+	}
+
+}
+
+bool TMR_wate_5sec(void)
+{
+	
+	if (value >= 5000)
+	{
+		value = 0;
+		trigger = 0;
+		return 1;
+	}
+	else if(value == 3000 || value == 4000 || value == 5000)
+	{
+		BUZ_Beep(1000, 400);
+	}
+	else
+	{
+		trigger = 1;
+	}
+	return 0;
+	
 }
 
 /*! \brief Timer driver initialization */

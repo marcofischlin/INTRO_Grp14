@@ -309,10 +309,37 @@ static void REF_StateMachine(void) {
   } /* switch */
 }
 
+
+static void REF_FireEvents()
+{
+	if (refState == REF_STATE_READY) {
+		// Voll auf Weisser Linie
+		if ((SensorCalibrated[0] < 100) &&   //0 weiss
+				(SensorCalibrated[5] < 100))     //5 weiss		
+				{
+			EVNT_SetEvent(EVNT_REF_FULLY_ON_BOARDER);
+		}
+
+		// Links auf Weisser Linie
+		else if (SensorCalibrated[0] < 100)   //0 weiss, 	
+				{
+			EVNT_SetEvent(EVNT_REF_LEFT_ON_BOARDER);
+		}
+
+		// Rechts auf Weisser Linie
+		else if (SensorCalibrated[5] < 100)   //5 weiss		
+				{
+			EVNT_SetEvent(EVNT_REF_RIGHT_ON_BOARDER);
+		}
+	
+	}
+}
+
 static portTASK_FUNCTION(ReflTask, pvParameters) {
   (void)pvParameters; /* not used */
   for(;;) {
     REF_StateMachine();
+    REF_FireEvents();
     FRTOS1_vTaskDelay(10/portTICK_RATE_MS);
   }
 }

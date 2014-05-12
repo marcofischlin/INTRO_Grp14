@@ -36,6 +36,9 @@
 #if PL_HAS_ULTRASONIC
   #include "Ultrasonic.h"
 #endif
+#if PL_HAS_DRIVE
+  #include "Drive.h"
+#endif
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
@@ -50,15 +53,20 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	      LED3_Neg();
 	      break;
 	#endif
+	      
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
+			LED1_Neg();
+		    (void) BUZ_Beep(20,1000);
+		  break;
+		  
+	  case EVNT_SW1_LPRESSED:
 		#if PL_HAS_LINE_SENSOR
 		  EVNT_SetEvent(EVNT_REF_START_STOP_CALIBRATION);
 		#endif
-		LED1_Neg();
-	    (void) BUZ_Beep(20,1000);
 	    break;
 	#endif
+	    
 	#if PL_NOF_KEYS>=2
 	  case EVNT_SW2_PRESSED:
 	    //LED2_Neg();
@@ -74,35 +82,84 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	    //LED4_Neg();
 	    break;
 	#endif
-
-	    default:
-	      break;
+	    
+		case EVNT_FALL_OFF_ARENA:
+			#if PL_HAS_MOTOR
+	
+			DRV_SetSpeed(0, 0);
+			#endif
+			break;
+		
+		case EVNT_FOUND_OPPONENT:			
+			#if PL_HAS_MOTOR
+	
+			DRV_SetSpeed(100, 100);
+			#endif
+			break;
+			
+		case EVNT_REF_FULLY_ON_BOARDER:			
+			#if PL_HAS_MOTOR
+			
+			DRV_SetSpeed(-60, -60);
+			#endif
+			break;
+			
+		case EVNT_REF_LEFT_ON_BOARDER:			
+			#if PL_HAS_MOTOR
+			
+			DRV_SetSpeed(-40, -60);
+			#endif
+			break;
+			
+		case EVNT_REF_RIGHT_ON_BOARDER:			
+			#if PL_HAS_MOTOR
+			
+			DRV_SetSpeed(-60, -40);
+			#endif
+			break;
+			
+	
+		default:
+		  break;
 	  }
 	}
 
 
 #if PL_HAS_RTOS
 static portTASK_FUNCTION(MainTask, pvParameters) {
-#if PL_HAS_ULTRASONIC	
-	(void)US_Measure_us();
-#endif	
+	
+  int16_t x, y, z;
+	
 #if PL_IS_FRDM
     ACCEL_LowLevelInit(); 
 #endif 
+    
     (void)pvParameters; /* parameter not used */
-  for(;;) {
+  for(;;)
+  {
+	  
+	EVNT_HandleEvent(APP_HandleEvent);
+	
 #if PL_HAS_ACCEL && PL_HAS_MOTOR
-	  int16_t x;
-	  int16_t y;
-	  int16_t z;
+
 	  ACCEL_GetValues(&x,&y,&z);
-	  if (z>800){
+	  if (z>800)
+	  {
+			EVNT_SetEvent(EVNT_FALL_OFF_ARENA);
 	  }
 #endif
-    EVNT_HandleEvent(APP_HandleEvent);
+	  
 #if PL_HAS_KEYS && !PL_HAS_KBI
     KEY_Scan(); /* poll keys */
 #endif
+    
+#if PL_HAS_ULTRASONIC	
+	if (US_GetLastCentimeterValue() < 60)
+	{
+		EVNT_SetEvent(EVNT_FOUND_OPPONENT);
+	}
+#endif
+	
     FRTOS1_vTaskDelay(20/portTICK_RATE_MS);  
   }
 }

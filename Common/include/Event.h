@@ -39,10 +39,16 @@ typedef enum EVNT_Handle {
 	  EVNT_SW4_RELEASED,    /*!< SW4 released */
 	  EVNT_SW4_LPRESSED,    /*!< SW4 long pressed */
 	#endif
+	#endif
+	  
 	#if PL_HAS_LINE_SENSOR
 	  EVNT_REF_START_STOP_CALIBRATION,
 	#endif
-	#endif
+	  EVNT_FALL_OFF_ARENA,
+	  EVNT_FOUND_OPPONENT,
+	  EVNT_REF_FULLY_ON_BOARDER,
+	  EVNT_REF_LEFT_ON_BOARDER,
+	  EVNT_REF_RIGHT_ON_BOARDER,
 	  EVNT_NOF_EVENTS       /*!< Must be last one! */
 	} EVNT_Handle;
 

@@ -117,6 +117,14 @@ uint8_t US_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdI
 }
 #endif
 
+static portTASK_FUNCTION(UltrasonicTask, pvParameters) {
+  (void)pvParameters; /* not used */
+  for(;;) {
+	(void)US_Measure_us();
+    FRTOS1_vTaskDelay(300/portTICK_RATE_MS);
+  }
+}
+
 void US_Deinit(void) {
    TRIG_Deinit(usDevice.trigDevice);
    TU_US_Deinit(usDevice.echoDevice);
@@ -126,6 +134,10 @@ void US_Init(void) {
   usDevice.state = ECHO_IDLE;
   usDevice.capture = 0;
   usDevice.trigDevice = TRIG_Init(NULL);
-  usDevice.echoDevice = TU_US_Init(&usDevice);
+  usDevice.echoDevice = TU_US_Init(&usDevice);  
+  
+  if (FRTOS1_xTaskCreate(UltrasonicTask, (unsigned char*)"Ultrasonic", configMINIMAL_STACK_SIZE, NULL, 1, NULL) != pdPASS) {
+	    for(;;){} /* error */
+	  }
 }
 #endif /* PL_HAS_ULTRASONIC */

@@ -17,6 +17,12 @@
 /*! \brief Function called from timer interrupt every TMR_TICK_MS. */
 void TMR_OnInterrupt(void);
 
+/* increment a timer */
+void INC_5s_Timer(void);
+
+/* controls the 5s Timer */
+bool TMR_wate_5sec(void);
+
 /*! \brief Timer driver initialization */
 void TMR_Init(void);
 

@@ -25,6 +25,7 @@
   uint8_t REF_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_StdIOType *io);
 #endif
 
+  
 /*!
  * \brief Driver Deinitialization.
  */
