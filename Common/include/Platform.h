@@ -67,7 +67,7 @@
   /*!< Set to one if we we have motor PID closed loop control */
 #define PL_HAS_DRIVE          (1 && PL_HAS_PID)
   /*!< Set to one if we we have a drive task */
-#define PL_HAS_ULTRASONIC     (0 && PL_IS_FRDM)
+#define PL_HAS_ULTRASONIC     (1 && PL_IS_FRDM)
   /*!< Set to one if we have an ultrasonic distance measurement sensor */
 #define PL_HAS_RADIO          (0)
   /*!< Set to one if we have a radio transceiver */

@@ -44,7 +44,7 @@
 #if PL_HAS_ACCEL
   #include "MMA1.h"
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
 #endif
@@ -121,7 +121,7 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #if PL_HAS_ACCEL
   MMA1_ParseCommand,
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   Q4CLeft_ParseCommand,
   Q4CRight_ParseCommand,
 #endif

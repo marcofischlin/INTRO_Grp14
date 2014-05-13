@@ -24,7 +24,7 @@
 #if PL_HAS_MOTOR_TACHO
   #include "Tacho.h"
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
 #endif
@@ -48,7 +48,7 @@ static bool traceMotor = TRUE;
 #if PL_HAS_MOTOR_TACHO
 static bool traceTacho = TRUE;
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
 static bool traceQuad = TRUE;
 #endif
 #if PL_HAS_ACCEL
@@ -79,7 +79,7 @@ static void TRACE_PrintStatus(const CLS1_StdIOType *io) {
     CLS1_SendStr((unsigned char*)"tacho(off) ", io->stdOut);
   }
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   if (traceQuad) {
     CLS1_SendStr((unsigned char*)"quad(on) ", io->stdOut);
   } else {
@@ -110,7 +110,7 @@ static void TRACE_PrintHelp(const CLS1_StdIOType *io) {
 #if PL_HAS_MOTOR_TACHO
   CLS1_SendHelpStr((unsigned char*)"  tacho on|off", (unsigned char*)"Enables or disables tacho trace\r\n", io->stdOut);
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   CLS1_SendHelpStr((unsigned char*)"  quad on|off", (unsigned char*)"Enables or disables quadrature trace\r\n", io->stdOut);
 #endif
 #if PL_HAS_ACCEL
@@ -154,7 +154,7 @@ uint8_t TRACE_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_S
     traceTacho = FALSE;
     *handled = TRUE;
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   } else if (UTIL1_strcmp((char*)cmd, (char*)"trace quad on")==0) {
     traceQuad = TRUE;
     *handled = TRUE;
@@ -226,7 +226,7 @@ static portTASK_FUNCTION(TraceTask, pvParameters) {
 #endif
       }
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
       if (traceQuad) {
         buf[0] = '\0';
         UTIL1_strcat(buf, sizeof(buf), (unsigned char*)" P:");
@@ -299,7 +299,7 @@ void TRACE_Init(void) {
 #if PL_HAS_MOTOR_TACHO
   traceTacho = FALSE;
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   traceQuad = FALSE;
 #endif
   if (FRTOS1_xTaskCreate(TraceTask, (unsigned char*)"Trace", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {

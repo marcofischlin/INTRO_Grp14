@@ -11,6 +11,10 @@
 #include "WAIT1.h"
 #include "TRIG.h"
 #include "UTIL1.h"
+#if PL_HAS_RTOS
+  #include "FRTOS1.h"
+  #include "RTOS.h"
+#endif
 
 typedef enum {
   ECHO_IDLE, /* device not used */
@@ -121,7 +125,7 @@ static portTASK_FUNCTION(UltrasonicTask, pvParameters) {
   (void)pvParameters; /* not used */
   for(;;) {
 	(void)US_Measure_us();
-    FRTOS1_vTaskDelay(300/portTICK_RATE_MS);
+    FRTOS1_vTaskDelay(400/portTICK_RATE_MS);
   }
 }
 

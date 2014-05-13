@@ -33,6 +33,9 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
+#if PL_HAS_SHELL
+  #include "Shell.h"
+#endif
 #if PL_HAS_MOTOR_TACHO
   #include "Tacho.h"
 #endif
@@ -45,10 +48,12 @@
 
 typedef enum {
   APP_STATE_INIT,
-  APP_STATE_WAIT,
+  APP_STATE_STOP,
   APP_STATE_SEARCH_OPPONENT,
   APP_STATE_FOUND_OPPONENT,
-  APP_STATE_BOARDER_REACHED
+  APP_STATE_BOARDER_REACHED,
+  APP_STATE_BOARDER_REACHED_LEFT,
+  APP_STATE_BOARDER_REACHED_RIGHT
 } AppStateType;
 static volatile AppStateType appState = APP_STATE_INIT; /* state machine state */
 
@@ -68,9 +73,20 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	      
 	#if PL_NOF_KEYS>=1
 	  case EVNT_SW1_PRESSED:
-		  while(!TMR_wate_5sec()){}
-
-		  appState = APP_STATE_SEARCH_OPPONENT;
+		if (appState == APP_STATE_STOP)
+		{
+			  SHELL_SendString((unsigned char*)"Starting Wait 5s.\r\n");
+			  while(!TMR_wate_5sec()){}
+			  
+			  SHELL_SendString((unsigned char*)"Starting Combat.\r\n");
+			  
+			  appState = APP_STATE_SEARCH_OPPONENT;
+		}
+		else
+		{
+			appState = APP_STATE_STOP;
+		}
+			
 		  break;
 		  
 	  case EVNT_SW1_LPRESSED:
@@ -97,43 +113,36 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	#endif
 	    
 		case EVNT_FALL_OFF_ARENA:
-			#if PL_HAS_MOTOR
-	
-			DRV_SetSpeed(0, 0);
-			appState = APP_STATE_WAIT;
-			#endif
+			
+			appState = APP_STATE_STOP;
 			break;
 		
 		case EVNT_FOUND_OPPONENT:			
-			#if PL_HAS_MOTOR
-	
-			DRV_SetSpeed(80, 80);
-			#endif
-			appState = APP_STATE_FOUND_OPPONENT;
+			if (appState != APP_STATE_STOP)
+			{
+				appState = APP_STATE_FOUND_OPPONENT;
+			}
 			break;
 			
 		case EVNT_REF_FULLY_ON_BOARDER:			
-			#if PL_HAS_MOTOR
-			
-			DRV_SetSpeed(-60, -60);
-			#endif
-			appState = APP_STATE_BOARDER_REACHED;
+			if (appState != APP_STATE_STOP)
+			{			
+				appState = APP_STATE_BOARDER_REACHED;
+			}
 			break;
 			
-		case EVNT_REF_LEFT_ON_BOARDER:			
-			#if PL_HAS_MOTOR
-			
-			DRV_SetSpeed(-40, -60);
-			#endif
-			appState = APP_STATE_BOARDER_REACHED;
+		case EVNT_REF_LEFT_ON_BOARDER:						
+			if (appState != APP_STATE_STOP)
+			{
+				appState = APP_STATE_BOARDER_REACHED_LEFT;
+			}
 			break;
 			
 		case EVNT_REF_RIGHT_ON_BOARDER:			
-			#if PL_HAS_MOTOR
-			
-			DRV_SetSpeed(-60, -40);
-			#endif
-			appState = APP_STATE_BOARDER_REACHED;
+			if (appState != APP_STATE_STOP)
+			{
+				appState = APP_STATE_BOARDER_REACHED_RIGHT;
+			}
 			break;
 			
 	
@@ -148,21 +157,23 @@ static void APP_StateMachine(void)
 	switch (appState){
 	
 		case APP_STATE_INIT:
-			appState = APP_STATE_WAIT;
+			appState = APP_STATE_STOP;
 			break;
 
-		case APP_STATE_WAIT:
+		case APP_STATE_STOP:
 			break;
 
 		case APP_STATE_SEARCH_OPPONENT:			
 			#if PL_HAS_MOTOR
-				DRV_SetSpeed(50, -50);
+				DRV_SetSpeed(100, -100);
 			#endif
 			
 			break;
 
 		case APP_STATE_FOUND_OPPONENT:
-			
+			#if PL_HAS_MOTOR
+				DRV_SetSpeed(100, 100);
+			#endif
 			break;
 
 		case APP_STATE_BOARDER_REACHED:
@@ -171,7 +182,31 @@ static void APP_StateMachine(void)
 			if (driveBackCnt == 1000)
 			{			
 				#if PL_HAS_MOTOR
-					DRV_SetSpeed(50, -50);
+					DRV_SetSpeed(-100, -100);
+				#endif	
+				appState = APP_STATE_SEARCH_OPPONENT;
+			}
+			break;
+
+		case APP_STATE_BOARDER_REACHED_LEFT:
+			driveBackCnt += 20;
+			
+			if (driveBackCnt == 1000)
+			{			
+				#if PL_HAS_MOTOR
+					DRV_SetSpeed(-100, -700);
+				#endif	
+				appState = APP_STATE_SEARCH_OPPONENT;
+			}
+			break;
+
+		case APP_STATE_BOARDER_REACHED_RIGHT:
+			driveBackCnt += 20;
+			
+			if (driveBackCnt == 1000)
+			{			
+				#if PL_HAS_MOTOR
+					DRV_SetSpeed(-70, -100);
 				#endif	
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
@@ -204,7 +239,7 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #if PL_HAS_ACCEL && PL_HAS_MOTOR
 
 	  ACCEL_GetValues(&x,&y,&z);
-	  if (z>800)
+	  if (z>700)
 	  {
 			EVNT_SetEvent(EVNT_FALL_OFF_ARENA);
 	  }

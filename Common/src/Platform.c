@@ -50,7 +50,7 @@
 #if PL_HAS_ACCEL
   #include "Accel.h"
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   #include "Q4CLeft.h"
   #include "Q4CRight.h"
 #endif
@@ -158,7 +158,7 @@ void PL_Init(void) {
 #if PL_HAS_ACCEL
   ACCEL_Init();
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   Q4CLeft_Init();
   Q4CRight_Init();
 #endif
@@ -195,7 +195,7 @@ void PL_Deinit(void) {
 #if PL_HAS_MOTOR_TACHO
   TACHO_Deinit();
 #endif
-#if PL_HAS_MOTOR_QUAD
+#if PL_HAS_QUADRATURE
   Q4CLeft_Deinit();
   Q4CRight_Deinit();
 #endif

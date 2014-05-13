@@ -103,7 +103,7 @@ void DRV_Deinit(void) {
 }
 
 void DRV_Init(void) {
-  DRV_SpeedOn = FALSE;
+  DRV_SpeedOn = TRUE;
   DRV_SpeedLeft = 0;
   DRV_SpeedRight = 0;
   if (FRTOS1_xTaskCreate(

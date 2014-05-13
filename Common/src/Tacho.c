@@ -9,8 +9,10 @@
 #include "Platform.h" /* interface to the platform */
 #if PL_HAS_MOTOR_TACHO
 #include "Tacho.h"    /* our own interface */
+#if PL_HAS_QUADRATURE
 #include "Q4CLeft.h"
 #include "Q4CRight.h"
+#endif
 #if PL_HAS_SHELL
   #include "CLS1.h"
 #endif
