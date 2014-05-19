@@ -57,6 +57,10 @@ typedef enum {
 } AppStateType;
 static volatile AppStateType appState = APP_STATE_INIT; /* state machine state */
 
+#if PL_HAS_MOTOR
+MOT_MotorDevice *motorL, *motorR;
+#endif
+
 static void APP_HandleEvent(EVNT_Handle event) {
 	  switch(event) { 
 	    case EVNT_INIT:
@@ -85,6 +89,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 		else
 		{
 			appState = APP_STATE_STOP;
+			SHELL_SendString((unsigned char*)"Stop.\r\n");
 		}
 			
 		  break;
@@ -115,12 +120,14 @@ static void APP_HandleEvent(EVNT_Handle event) {
 		case EVNT_FALL_OFF_ARENA:
 			
 			appState = APP_STATE_STOP;
+			SHELL_SendString((unsigned char*)"Fall of Arena.\r\n");
 			break;
 		
 		case EVNT_FOUND_OPPONENT:			
 			if (appState != APP_STATE_STOP)
 			{
 				appState = APP_STATE_FOUND_OPPONENT;
+				SHELL_SendString((unsigned char*)"Found Opponent.\r\n");
 			}
 			break;
 			
@@ -128,6 +135,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			if (appState != APP_STATE_STOP)
 			{			
 				appState = APP_STATE_BOARDER_REACHED;
+				SHELL_SendString((unsigned char*)"Boarder Reached full.\r\n");
 			}
 			break;
 			
@@ -135,6 +143,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			if (appState != APP_STATE_STOP)
 			{
 				appState = APP_STATE_BOARDER_REACHED_LEFT;
+				SHELL_SendString((unsigned char*)"Boarder Reached left.\r\n");
 			}
 			break;
 			
@@ -142,6 +151,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			if (appState != APP_STATE_STOP)
 			{
 				appState = APP_STATE_BOARDER_REACHED_RIGHT;
+				SHELL_SendString((unsigned char*)"Boarder Reached right.\r\n");
 			}
 			break;
 			
@@ -160,54 +170,69 @@ static void APP_StateMachine(void)
 			appState = APP_STATE_STOP;
 			break;
 
-		case APP_STATE_STOP:
+		case APP_STATE_STOP:			
+			#if PL_HAS_MOTOR
+				MOT_SetSpeedPercent(motorL, 0);
+				MOT_SetSpeedPercent(motorR, 0);
+			#endif
 			break;
 
 		case APP_STATE_SEARCH_OPPONENT:			
 			#if PL_HAS_MOTOR
-				DRV_SetSpeed(100, -100);
+			MOT_SetSpeedPercent(motorL, 12);
+			MOT_SetSpeedPercent(motorR, -12);
 			#endif
 			
 			break;
 
 		case APP_STATE_FOUND_OPPONENT:
 			#if PL_HAS_MOTOR
-				DRV_SetSpeed(100, 100);
+			MOT_SetSpeedPercent(motorL, 50);
+			MOT_SetSpeedPercent(motorR, 50);
 			#endif
 			break;
 
 		case APP_STATE_BOARDER_REACHED:
 			driveBackCnt += 20;
+						
+			#if PL_HAS_MOTOR
+			MOT_SetSpeedPercent(motorL, -50);
+			MOT_SetSpeedPercent(motorR, -50);
+			#endif	
 			
-			if (driveBackCnt == 1000)
-			{			
-				#if PL_HAS_MOTOR
-					DRV_SetSpeed(-100, -100);
-				#endif	
+			if (driveBackCnt >= 600)
+			{
+				driveBackCnt = 0;
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
 
 		case APP_STATE_BOARDER_REACHED_LEFT:
 			driveBackCnt += 20;
-			
-			if (driveBackCnt == 1000)
-			{			
-				#if PL_HAS_MOTOR
-					DRV_SetSpeed(-100, -700);
-				#endif	
+						
+			#if PL_HAS_MOTOR
+			MOT_SetSpeedPercent(motorL, -40);
+			MOT_SetSpeedPercent(motorR, -20);
+			#endif
+				
+			if (driveBackCnt >= 400)
+			{		
+				driveBackCnt = 0;
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
 
 		case APP_STATE_BOARDER_REACHED_RIGHT:
 			driveBackCnt += 20;
+						
+			#if PL_HAS_MOTOR
+			MOT_SetSpeedPercent(motorL, -20);
+			MOT_SetSpeedPercent(motorR, -40);
+			#endif	
 			
-			if (driveBackCnt == 1000)
-			{			
-				#if PL_HAS_MOTOR
-					DRV_SetSpeed(-70, -100);
-				#endif	
+			if (driveBackCnt >= 400)
+			{		
+				driveBackCnt = 0;	
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
@@ -225,6 +250,7 @@ static void APP_StateMachine(void)
 static portTASK_FUNCTION(MainTask, pvParameters) {
 	
   int16_t x, y, z;
+  int cnt_accel = 0;
 	
 #if PL_IS_FRDM
     ACCEL_LowLevelInit(); 
@@ -241,7 +267,15 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 	  ACCEL_GetValues(&x,&y,&z);
 	  if (z>700)
 	  {
+		  cnt_accel++;
+		  if(cnt_accel>=5)
+		  {
 			EVNT_SetEvent(EVNT_FALL_OFF_ARENA);
+		  }
+	  }
+	  else
+	  {
+		  cnt_accel = 0;
 	  }
 #endif
 	  
@@ -250,10 +284,17 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
 #endif
     
 #if PL_HAS_ULTRASONIC	
-	if (US_GetLastCentimeterValue() < 60)
+	if ((US_GetLastCentimeterValue() < 50) && (appState != APP_STATE_FOUND_OPPONENT))
 	{
 		EVNT_SetEvent(EVNT_FOUND_OPPONENT);
 	}
+	else
+	{
+/*		if (appState != APP_STATE_STOP)
+		{
+			appState = APP_STATE_SEARCH_OPPONENT;
+		}
+*/	}
 #endif
 	
 	APP_StateMachine();
@@ -275,6 +316,8 @@ static void APP_Loop(void) {
 
 void APP_Run(void) {
 	PL_Init();
+	motorL = MOT_GetMotorHandle(MOT_MOTOR_LEFT);
+	motorR = MOT_GetMotorHandle(MOT_MOTOR_RIGHT);
 	  EVNT_SetEvent(EVNT_INIT);
 	#if PL_HAS_RTOS
 	  if (FRTOS1_xTaskCreate(

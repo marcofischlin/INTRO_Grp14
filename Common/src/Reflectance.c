@@ -314,20 +314,20 @@ static void REF_FireEvents()
 {
 	if (refState == REF_STATE_READY) {
 		// Voll auf Weisser Linie
-		if ((SensorCalibrated[0] < 100) &&   //0 weiss
-				(SensorCalibrated[5] < 100))     //5 weiss		
+		if ((SensorCalibrated[0] < 500) &&   //0 weiss
+				(SensorCalibrated[5] < 500))     //5 weiss		
 				{
 			EVNT_SetEvent(EVNT_REF_FULLY_ON_BOARDER);
 		}
 
 		// Links auf Weisser Linie
-		else if (SensorCalibrated[0] < 100)   //0 weiss, 	
+		else if (SensorCalibrated[0] < 500)   //0 weiss, 	
 				{
 			EVNT_SetEvent(EVNT_REF_LEFT_ON_BOARDER);
 		}
 
 		// Rechts auf Weisser Linie
-		else if (SensorCalibrated[5] < 100)   //5 weiss		
+		else if (SensorCalibrated[5] < 500)   //5 weiss		
 				{
 			EVNT_SetEvent(EVNT_REF_RIGHT_ON_BOARDER);
 		}

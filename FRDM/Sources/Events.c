@@ -265,7 +265,7 @@ void TU_US_OnCounterRestart(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
 #if PL_HAS_ULTRASONIC
-	US_EventEchoCapture(UserDataPtr);
+	US_EventEchoOverflow(UserDataPtr);
 #endif
 }
 
@@ -292,7 +292,7 @@ void TU_US_OnChannel0(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
 #if PL_HAS_ULTRASONIC
-	US_EventEchoOverflow(UserDataPtr);
+	US_EventEchoCapture(UserDataPtr);
 #endif
 }
 
