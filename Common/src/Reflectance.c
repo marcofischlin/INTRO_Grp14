@@ -21,6 +21,7 @@
 #include "Application.h"
 #include "Event.h"
 #include "Shell.h"
+#include "NVM_Config.h"
 
 #define REF_NOF_SENSORS 6 /* number of sensors */
 
@@ -262,8 +263,33 @@ static void REF_StateMachine(void) {
 
   switch (refState) {
     case REF_STATE_INIT:
+#if PL_HAS_CONFIG_NVM
+    	  SensorCalibMinMax = *((SensorCalibT *)NVMC_GetReflectanceData());
+		  if(SensorCalibMinMax.minVal[0] == NVMC_FLASH_ERASED_UINT16)
+		  {
+			  SHELL_SendString((unsigned char*)"no calibration data present.\r\n");
+			  /*SensorCalibMinMax.minVal[0] = (SensorTimeType)0x013D;
+			  SensorCalibMinMax.minVal[1] = (SensorTimeType)0x00CF;
+			  SensorCalibMinMax.minVal[2] = (SensorTimeType)0x00C6;
+			  SensorCalibMinMax.minVal[3] = (SensorTimeType)0x00CA;
+			  SensorCalibMinMax.minVal[4] = (SensorTimeType)0x010D;
+			  SensorCalibMinMax.minVal[5] = (SensorTimeType)0x016D;
+			  int i;
+			  for(i=0;i<=5;i++)
+				  SensorCalibMinMax.maxVal[i] = (SensorTimeType)0xFFFF;
+			  SHELL_SendString((unsigned char*)"Calibrated from default values.\r\n");
+			  */
+			  refState = REF_STATE_NOT_CALIBRATED;
+		  }
+		  else
+		  {
+			  SHELL_SendString((unsigned char*)"Calibrated from Flash.\r\n");
+			  refState = REF_STATE_READY;
+		  }
+#else		   
       SHELL_SendString((unsigned char*)"no calibration data present.\r\n");
       refState = REF_STATE_NOT_CALIBRATED;
+#endif
       break;
       
     case REF_STATE_NOT_CALIBRATED:
@@ -296,6 +322,9 @@ static void REF_StateMachine(void) {
     
     case REF_STATE_STOP_CALIBRATION:
       SHELL_SendString((unsigned char*)"...stopping calibration.\r\n");
+      #if PL_HAS_CONFIG_NVM
+      	  NVMC_SaveReflectanceData(&SensorCalibMinMax,NVMC_REFLECTANCE_DATA_SIZE);
+	  #endif
       refState = REF_STATE_READY;
       break;
         

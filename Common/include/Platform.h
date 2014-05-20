@@ -63,7 +63,7 @@
 #define PL_HAS_SHELL_TRACE    (1)
   /*!< Set to one if we trace values to the shell */
 
-#define PL_HAS_PID            (1 && PL_HAS_MOTOR)
+#define PL_HAS_PID            (0 && PL_HAS_MOTOR)
   /*!< Set to one if we we have motor PID closed loop control */
 #define PL_HAS_DRIVE          (1 && PL_HAS_PID)
   /*!< Set to one if we we have a drive task */

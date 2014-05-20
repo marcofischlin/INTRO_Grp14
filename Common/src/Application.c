@@ -57,6 +57,8 @@ typedef enum {
 } AppStateType;
 static volatile AppStateType appState = APP_STATE_INIT; /* state machine state */
 
+uint16 cnt_search;
+
 #if PL_HAS_MOTOR
 MOT_MotorDevice *motorL, *motorR;
 #endif
@@ -83,7 +85,8 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			  while(!TMR_wate_5sec()){}
 			  
 			  SHELL_SendString((unsigned char*)"Starting Combat.\r\n");
-			  
+
+			  cnt_search = 0;
 			  appState = APP_STATE_SEARCH_OPPONENT;
 		}
 		else
@@ -161,7 +164,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	  }
 	}
 
-uint16 driveBackCnt;
+uint16 driveBackCnt, speedL, speedR;
 static void APP_StateMachine(void)
 {
 	switch (appState){
@@ -177,12 +180,20 @@ static void APP_StateMachine(void)
 			#endif
 			break;
 
-		case APP_STATE_SEARCH_OPPONENT:			
-			#if PL_HAS_MOTOR
-			MOT_SetSpeedPercent(motorL, 12);
-			MOT_SetSpeedPercent(motorR, -12);
-			#endif
-			
+		case APP_STATE_SEARCH_OPPONENT:		
+			if(cnt_search >= 3000)
+			{
+				appState = APP_STATE_FOUND_OPPONENT;
+			}
+			else
+			{
+				cnt_search += 20;
+				#if PL_HAS_MOTOR
+				MOT_SetSpeedPercent(motorL, 20);
+				MOT_SetSpeedPercent(motorR, 2);
+				#endif	
+			}
+						
 			break;
 
 		case APP_STATE_FOUND_OPPONENT:
@@ -200,9 +211,10 @@ static void APP_StateMachine(void)
 			MOT_SetSpeedPercent(motorR, -50);
 			#endif	
 			
-			if (driveBackCnt >= 600)
+			if (driveBackCnt >= 300)
 			{
 				driveBackCnt = 0;
+				cnt_search = 0;
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
@@ -218,6 +230,7 @@ static void APP_StateMachine(void)
 			if (driveBackCnt >= 400)
 			{		
 				driveBackCnt = 0;
+				cnt_search = 0;
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
@@ -233,6 +246,7 @@ static void APP_StateMachine(void)
 			if (driveBackCnt >= 400)
 			{		
 				driveBackCnt = 0;	
+				cnt_search = 0;
 				appState = APP_STATE_SEARCH_OPPONENT;
 			}
 			break;
@@ -283,18 +297,21 @@ static portTASK_FUNCTION(MainTask, pvParameters) {
     KEY_Scan(); /* poll keys */
 #endif
     
-#if PL_HAS_ULTRASONIC	
-	if ((US_GetLastCentimeterValue() < 50) && (appState != APP_STATE_FOUND_OPPONENT))
-	{
-		EVNT_SetEvent(EVNT_FOUND_OPPONENT);
-	}
-	else
-	{
-/*		if (appState != APP_STATE_STOP)
+#if PL_HAS_ULTRASONIC
+    if(appState != APP_STATE_BOARDER_REACHED && appState != APP_STATE_BOARDER_REACHED_LEFT && appState != APP_STATE_BOARDER_REACHED_RIGHT)
+    {
+    	if ((US_GetLastCentimeterValue() < 50) && (appState != APP_STATE_FOUND_OPPONENT))
 		{
-			appState = APP_STATE_SEARCH_OPPONENT;
+			EVNT_SetEvent(EVNT_FOUND_OPPONENT);
 		}
-*/	}
+		else
+		{
+	/*		if (appState != APP_STATE_STOP)
+			{
+				appState = APP_STATE_SEARCH_OPPONENT;
+			}
+	*/	}
+    }
 #endif
 	
 	APP_StateMachine();
